@@ -13,7 +13,6 @@ let renderer;
 let controls;
 
 
-
 class World {
     constructor() {
         scene = createScene();
@@ -49,19 +48,11 @@ class World {
     }
 
     initialize() {
-        let stickman = new Stickman([0,0,0], 0xFFFFFF);
-        let stickman1 = new Stickman([50,0,50], 0xFFFFFF);
-        let stickman2 = new Stickman([-200,0,-200], 0x33BEFF);
-        let stickman3 = new Stickman([0,0,300], 0xFFFFFF);
-        let stickman4 = new Stickman([40,0,0], 0xff0000);
-
-
-
-        scene.add(stickman.getSceneObj());
-        scene.add(stickman1.getSceneObj());
-        scene.add(stickman2.getSceneObj());
-        scene.add(stickman3.getSceneObj());
-        scene.add(stickman4.getSceneObj());
+        let stickman = new Stickman(scene, [0,0,0], 0xFFFFFF);
+        let stickman1 = new Stickman(scene,[50,0,50], 0xFFFFFF);
+        let stickman2 = new Stickman(scene,[-200,0,-200], 0x33BEFF);
+        let stickman3 = new Stickman(scene,[0,0,300], 0xFFFFFF);
+        let stickman4 = new Stickman(scene,[40,0,0], 0xff0000);
 
         loop.updatables.push(stickman);
 
@@ -92,9 +83,7 @@ class World {
 
 function createScene() {
     scene = new THREE.Scene();
-    console.log("here");
     scene.background = new THREE.Color('skyblue')
-    // scene.fog = new THREE.Fog( 0xffffff, 1000, 3000 );
 
     return scene;
 }
@@ -119,16 +108,6 @@ function createRenderer() {
 
     return renderer;
 }
-
-
-
-// gsap.from(apple.position, {
-//   y: 100,
-//   duration: 2.5,
-//   ease: "bounce.out"
-// });
-
-
 
 
 export { World };

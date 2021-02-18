@@ -1,28 +1,87 @@
 import { Group } from "https://cdn.skypack.dev/three@0.122.0/build/three.module.js";
 import { GLTFLoader } from "https://cdn.skypack.dev/three@0.122.0/examples/jsm/loaders/GLTFLoader.js";
+import * as THREE from "https://cdn.skypack.dev/three@v0.122.0/build/three.module.js";
 
 
 class Stickman {
-    constructor(position, color) {
-        this.stickman = new Group()
+    constructor(scene, position, color) {
+        this.scene_obj = null;
+        this.mixer = null;
+        this.color = color;
+        this.position = position;
+        this.scene = scene;
+        this.animations = {};
         let gltfLoader = new GLTFLoader();
-        gltfLoader.load("./models/stickman/scene.gltf", (object) => {
-            // gltf loads an entire scene. You could use the scene directly or pull the objects out of the scene like below:
-            let obj = object.scene.children[0];
+        gltfLoader.load("./models/stickman/scene.gltf", (gltf) => this._loadGLTF(gltf));
 
-            // obj.rotation.set(0, Math.PI / 1.8, 0);
-            obj.scale.set(100, 100, 100);
-
-            obj.children[0].children[0].children[0].children[0]
-                .children[1].children[0].children[2].material.color.setHex(color)
-            // obj.geometry.center();
-            this.stickman.add(obj);
-            this.stickman.position.set(...position)
-        });
     }
 
-    getSceneObj() {
-        return this.stickman
+    setColor(color) {
+        this.scene_obj.children[0].children[0].children[0].children[0].children[0]
+            .children[1].children[0].children[2].material.color.setHex(color)
+    }
+
+    _loadGLTF(gltf) {
+        this.scene_obj = gltf.scene;
+        this.scene_obj.scale.set(100, 100, 100);
+        this.setColor(this.color)
+        this.scene.add(this.scene_obj);
+        this.scene_obj.position.set(...this.position);
+
+        this.mixer = new THREE.AnimationMixer(this.scene_obj);
+        this._loadAnimations(gltf);
+        this.idle()
+
+    }
+
+    _loadAnimations(gltf) {
+        let animations_names = {
+            "Armature.001|Armature.001|mixamo.com|Layer0": "idle",
+            "Armature.001|Armature.002|mixamo.com|Layer0": "run",
+            "Armature.001|Sad.Idle.001" : "sad_idle"
+        }
+
+        gltf.animations.forEach((animation) => {
+            let name = animations_names[animation.name];
+            this.animations[name] = this.mixer.clipAction(animation) })
+    }
+
+    tick(delta) {
+        if (this.mixer) {
+            this.mixer.update(delta);
+        }
+    }
+
+    startAnimations(animation_list) {
+        for (let anim_name in this.animations) {
+
+            if (animation_list.includes(anim_name) && !this.animations[anim_name].isRunning()) {
+                this.animations[anim_name].play()
+            }
+            else if (this.animations[anim_name].isRunning()) {
+                this.animations[anim_name].stop()
+            }
+        }
+    }
+
+    sadIdle() {
+        this.startAnimations(['sad_idle'])
+    }
+
+    quickWalk() {
+        this.startAnimations(['idle', 'run'])
+    }
+
+    walk() {
+        this.startAnimations(['idle', 'run', 'sad'])
+    }
+
+    run() {
+        this.startAnimations([ 'run'])
+    }
+
+    idle() {
+        this.animations['idle'].play();
     }
 
 }
