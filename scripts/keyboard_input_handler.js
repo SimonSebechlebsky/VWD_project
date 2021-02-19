@@ -1,5 +1,5 @@
 
-class KeyboardInputHandler{
+class KeyboardInputHandler {
     constructor() {
         this.keys = {
             forward: false,
@@ -7,7 +7,7 @@ class KeyboardInputHandler{
             left: false,
             right: false,
             space: false,
-            shift: false,
+            run: false,
         };
 
         document.addEventListener('keydown', (e) => this._onKeyDown(e), false);
@@ -16,6 +16,7 @@ class KeyboardInputHandler{
 
     getInput() {
         let pressedKeys = [];
+        // console.log(this.keys);
 
         for (const key in this.keys) {
             if (this.keys[key]) {
@@ -45,7 +46,7 @@ class KeyboardInputHandler{
                 this.keys.space = true;
                 break;
             case 16: // SHIFT
-                this.keys.shift = true;
+                this.keys.run = true;
                 break;
         }
     }
@@ -68,7 +69,7 @@ class KeyboardInputHandler{
                 this.keys.space = false;
                 break;
             case 16: // SHIFT
-                this.keys.shift = false;
+                this.keys.run = false;
                 break;
         }
     }

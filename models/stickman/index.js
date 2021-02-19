@@ -1,6 +1,7 @@
 import { Group } from "https://cdn.skypack.dev/three@0.122.0/build/three.module.js";
 import { GLTFLoader } from "https://cdn.skypack.dev/three@0.122.0/examples/jsm/loaders/GLTFLoader.js";
 import * as THREE from "https://cdn.skypack.dev/three@v0.122.0/build/three.module.js";
+import _ from 'https://cdn.skypack.dev/lodash';
 
 
 class Stickman {
@@ -23,6 +24,36 @@ class Stickman {
             .children[1].children[0].children[2].material.color.setHex(color)
     }
 
+    move(vector) {
+        // console.log(vector)
+        this.scene_obj.position.add(vector);
+        // console.log(this.scene_obj.position);
+    }
+
+    setOrientation(directions) {
+        let orientations = {
+            forward: THREE.Math.degToRad(45),
+            left: THREE.Math.degToRad(135),
+            backward: THREE.Math.degToRad(225),
+            right: THREE.Math.degToRad(315)
+
+        }
+
+        let dirCount = 0;
+        let angle = 0.;
+        directions.forEach((dir) => {
+            angle += orientations[dir];
+            dirCount++;
+        })
+
+        angle = angle/dirCount;
+
+        if (_.isEqual(directions.sort(), ['forward', 'right'])) {
+            angle += THREE.Math.degToRad(180);
+        }
+        this.scene_obj.rotation.y = angle;
+}
+
     _loadGLTF(gltf) {
         this.scene_obj = gltf.scene;
         this.scene_obj.scale.set(100, 100, 100);
@@ -33,11 +64,14 @@ class Stickman {
         this.mixer = new THREE.AnimationMixer(this.scene_obj);
         this._loadAnimations(gltf);
 
+
+
         this.loaded = true;
 
         if (this.loadingCallback) {
             this.loadingCallback(this)
         }
+
     }
 
     _loadAnimations(gltf) {
@@ -68,7 +102,7 @@ class Stickman {
             if (animation_list.includes(anim_name) && !this.animations[anim_name].isRunning()) {
                 this.animations[anim_name].play()
             }
-            else if (this.animations[anim_name].isRunning()) {
+            else if (!animation_list.includes(anim_name)) {
                 this.animations[anim_name].stop()
             }
         }
