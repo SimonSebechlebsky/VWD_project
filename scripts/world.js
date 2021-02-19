@@ -4,7 +4,7 @@ import { OrbitControls } from "https://cdn.skypack.dev/three@0.122.0/examples/js
 import gsap from 'https://cdn.skypack.dev/gsap@3.5.1';
 
 // import Stickman from '../models/stickman/index.js';
-import Person from './person/person.js'
+import MedicPerson from './person/medic_person.js'
 import KeyboardInputHandler from './keyboard_input_handler.js'
 import Loop from './loop.js';
 //
@@ -23,15 +23,15 @@ class World {
         loop = new Loop(camera, scene, renderer);
         document.body.appendChild( renderer.domElement );
 
-        controls = new OrbitControls( camera, renderer.domElement );
-        controls.minDistance = 80;
-        controls.enableDamping = true;
-
-        window.addEventListener( 'resize', function () {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize( window.innerWidth, window.innerHeight );
-        }, false );
+        // controls = new OrbitControls( camera, renderer.domElement );
+        // controls.minDistance = 80;
+        // controls.enableDamping = true;
+        //
+        // window.addEventListener( 'resize', function () {
+        //     camera.aspect = window.innerWidth / window.innerHeight;
+        //     camera.updateProjectionMatrix();
+        //     renderer.setSize( window.innerWidth, window.innerHeight );
+        // }, false );
     }
 
 
@@ -50,13 +50,9 @@ class World {
     }
 
     initialize() {
-        let stickman = new Person(new KeyboardInputHandler());
-        // let stickman1 = new Stickman(scene,[50,0,50], 0xFFFFFF);
-        // let stickman2 = new Stickman(scene,[-200,0,-200], 0x33BEFF);
-        // let stickman3 = new Stickman(scene,[0,0,300], 0xFFFFFF);
-        // let stickman4 = new Stickman(scene,[40,0,0], 0xff0000);
+        let medic = new MedicPerson();
 
-        loop.updatables.push(stickman);
+        loop.updatables.push(medic);
 
         const light = new THREE.PointLight( 0xffffff, 0.7, 1000 );
         light.position.set( -300, 300, 300 );
@@ -66,6 +62,8 @@ class World {
         light.shadow.bias = - 0.15;
 
         scene.add( light );
+        const axesHelper = new THREE.AxesHelper( 500 );
+        scene.add( axesHelper );
 
         const backLight = new THREE.PointLight( 0xffffff, 1, 90 );
         backLight.position.set( 300, 300, 300 );
@@ -92,8 +90,8 @@ function createScene() {
 
 function createCamera() {
     camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 0.1, 3000 );
-    camera.position.set(400,400,400);
-    camera.lookAt(new THREE.Vector3(0,1,0));
+    camera.position.set(-330,660,-330);
+    camera.lookAt(new THREE.Vector3(0,0,0));
 
     // controls = new OrbitControls( camera, renderer.domElement );
     // controls.minDistance = 80;

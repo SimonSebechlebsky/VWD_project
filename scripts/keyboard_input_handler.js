@@ -17,8 +17,8 @@ class KeyboardInputHandler{
     getInput() {
         let pressedKeys = [];
 
-        for (const [key, pressed] in this.keys.entries()) {
-            if (pressed) {
+        for (const key in this.keys) {
+            if (this.keys[key]) {
                 pressedKeys.push(key);
             }
         }

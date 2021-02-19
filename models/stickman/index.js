@@ -4,13 +4,15 @@ import * as THREE from "https://cdn.skypack.dev/three@v0.122.0/build/three.modul
 
 
 class Stickman {
-    constructor(scene, position, color) {
+    constructor(scene, position, color, loadingCallback=null) {
         this.scene_obj = null;
         this.mixer = null;
         this.color = color;
         this.position = position;
         this.scene = scene;
         this.animations = {};
+        this.loadingCallback = loadingCallback;
+        this.loaded = false;
         let gltfLoader = new GLTFLoader();
         gltfLoader.load("./models/stickman/scene.gltf", (gltf) => this._loadGLTF(gltf));
 
@@ -30,6 +32,12 @@ class Stickman {
 
         this.mixer = new THREE.AnimationMixer(this.scene_obj);
         this._loadAnimations(gltf);
+
+        this.loaded = true;
+
+        if (this.loadingCallback) {
+            this.loadingCallback(this)
+        }
     }
 
     _loadAnimations(gltf) {
@@ -51,6 +59,10 @@ class Stickman {
     }
 
     startAnimations(animation_list) {
+        if (!this.loaded) {
+            return;
+        }
+
         for (let anim_name in this.animations) {
 
             if (animation_list.includes(anim_name) && !this.animations[anim_name].isRunning()) {

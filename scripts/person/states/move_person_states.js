@@ -2,13 +2,19 @@
 import {PersonState} from "./person_state.js";
 
 class IdleState extends PersonState {
-    update() {
 
+    constructor(person) {
+        super(person);
+        this.enter();
+    }
+    update(input) {
+        return this;
     }
 
-    name() {
-        'idle';
+    enter() {
+        this.person.stickman.idle();
     }
+
 }
 
 class RunningState extends PersonState {
