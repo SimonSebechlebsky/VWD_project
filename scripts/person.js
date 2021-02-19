@@ -20,8 +20,8 @@ class KeyboardInputHandler{
     getInput() {
         let pressedKeys = [];
 
-        for (const [key, pressed] in this.keys.entries()) {
-            if (pressed) {
+        for (const key in this.keys) {
+            if (this.keys[key]) {
                 pressedKeys.push(key);
             }
         }
@@ -79,13 +79,13 @@ class KeyboardInputHandler{
 
 class Person {
 
-    constructor(input_handler) {
+    constructor(inputHandler) {
         this.stickman = this._createStickman();
         this.speed = 0;
         this.direction = [0,0,0];
-        this.move_state = new IdleState(this);
+        this.moveState = new IdleState(this);
 
-        this.input_handler = input_handler;
+        this.inputHandler = inputHandler;
     }
 
     _createStickman() {
@@ -94,10 +94,10 @@ class Person {
 
     tick(delta) {
 
-        let prevState = this.state;
-        this.state = this.state.update(this.input_handler.getInput());
-        if (prevState.name() !== this.state.name()) {
-            this.state.enter();
+        let prevMoveState = this.moveState;
+        // this.moveState = this.moveState.update(this.inputHandler.getInput());
+        if (prevMoveState.name() !== this.moveState.name()) {
+            this.moveState.enter();
         }
         this.stickman.tick(delta);
 
@@ -135,7 +135,7 @@ class IdleState extends State {
     }
 
     name() {
-        'idle';
+        return 'idle';
     }
 }
 
@@ -148,4 +148,5 @@ class WalkingState extends State  {
 
 }
 
+export {Person, KeyboardInputHandler};
 export default Person;
