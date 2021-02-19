@@ -1,7 +1,7 @@
-import Stickman from '../models/stickman/index.js';
-import {scene} from './world.js'
+import {scene} from '../world.js'
 
-import {IdleState, WalkingState, RunningState} from "./move_states.js";
+import {IdleState, WalkingState, RunningState} from "./states/move_person_states.js";
+import Stickman from "../../models/stickman/index.js";
 
 
 class Person {

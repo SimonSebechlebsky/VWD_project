@@ -4,7 +4,7 @@ import { OrbitControls } from "https://cdn.skypack.dev/three@0.122.0/examples/js
 import gsap from 'https://cdn.skypack.dev/gsap@3.5.1';
 
 // import Stickman from '../models/stickman/index.js';
-import Person from './person.js'
+import Person from './person/person.js'
 import KeyboardInputHandler from './keyboard_input_handler.js'
 import Loop from './loop.js';
 //
