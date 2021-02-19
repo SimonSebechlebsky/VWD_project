@@ -3,7 +3,8 @@ import { OrbitControls } from "https://cdn.skypack.dev/three@0.122.0/examples/js
 
 import gsap from 'https://cdn.skypack.dev/gsap@3.5.1';
 
-import Stickman from '../models/stickman/index.js';
+// import Stickman from '../models/stickman/index.js';
+import Person from './person.js'
 import Loop from './loop.js';
 //
 let loop;
@@ -48,11 +49,11 @@ class World {
     }
 
     initialize() {
-        let stickman = new Stickman(scene, [0,0,0], 0xFFFFFF);
-        let stickman1 = new Stickman(scene,[50,0,50], 0xFFFFFF);
-        let stickman2 = new Stickman(scene,[-200,0,-200], 0x33BEFF);
-        let stickman3 = new Stickman(scene,[0,0,300], 0xFFFFFF);
-        let stickman4 = new Stickman(scene,[40,0,0], 0xff0000);
+        let stickman = new Person();
+        // let stickman1 = new Stickman(scene,[50,0,50], 0xFFFFFF);
+        // let stickman2 = new Stickman(scene,[-200,0,-200], 0x33BEFF);
+        // let stickman3 = new Stickman(scene,[0,0,300], 0xFFFFFF);
+        // let stickman4 = new Stickman(scene,[40,0,0], 0xff0000);
 
         loop.updatables.push(stickman);
 
@@ -110,5 +111,5 @@ function createRenderer() {
 }
 
 
-export { World };
+export { World, scene };
 export default World;
