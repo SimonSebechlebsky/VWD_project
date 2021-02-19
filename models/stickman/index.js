@@ -30,8 +30,6 @@ class Stickman {
 
         this.mixer = new THREE.AnimationMixer(this.scene_obj);
         this._loadAnimations(gltf);
-        this.run()
-
     }
 
     _loadAnimations(gltf) {
