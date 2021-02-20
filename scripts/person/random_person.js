@@ -6,15 +6,17 @@ import RandomBotInputHandler from "../random_bot_input_handler.js";
 
 class RandomPerson extends Person {
 
-    constructor() {
-        super(new RandomBotInputHandler());
+    constructor(position=[0,0,0]) {
+        super(null, position);
+        // can't be set via super constructor, "this" is not allowed before super
+        this.inputHandler = new RandomBotInputHandler(this.stickman);
         this.healthState = new InfectedPersonState(this);
         this.infected = false;
         this.vaccinated = false;
     }
 
-    _createStickman() {
-        return new Stickman(scene, [0,0,0], [255, 255, 255], (stickman) => stickman.walk());
+    _createStickman(position) {
+        return new Stickman(scene, position, [255, 255, 255], (stickman) => stickman.walk());
     }
 
     tick(delta) {

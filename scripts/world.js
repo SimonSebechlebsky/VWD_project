@@ -92,5 +92,5 @@ function createRenderer() {
 }
 
 
-export { World, scene, CAMERA_INITIAL_POSITION };
+export { World, scene, CAMERA_INITIAL_POSITION, WORLD_SIZE };
 export default World;

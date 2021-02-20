@@ -8,11 +8,11 @@ import {scene} from "../world.js";
 class MedicPerson extends Person {
 
     constructor() {
-        super(new KeyboardInputHandler());
+        super(new KeyboardInputHandler(), [0,0,0]);
     }
 
-    _createStickman() {
-        return new Stickman(scene, [0,0,0], [51, 190, 255], (stickman) => stickman.idle());
+    _createStickman(position) {
+        return new Stickman(scene, position, [51, 190, 255], (stickman) => stickman.idle());
     }
 }
 
