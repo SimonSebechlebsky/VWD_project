@@ -12,6 +12,7 @@ let loop;
 let scene;
 let camera;
 let renderer;
+let light;
 
 const CAMERA_INITIAL_POSITION = new THREE.Vector3(-330,660,-330);
 const WORLD_SIZE = 1300;
@@ -22,7 +23,8 @@ class World {
         scene = createScene();
         camera = createCamera();
         renderer = createRenderer();
-        loop = new Loop(camera, scene, renderer);
+        light = createLight();
+        loop = new Loop(camera, scene, renderer, light);
         document.body.appendChild( renderer.domElement );
     }
 
@@ -35,27 +37,6 @@ class World {
     }
 
     initialize() {
-
-
-        const light = new THREE.PointLight( 0xffffff, 0.7, 1000 );
-        light.position.set( -300, 300, 300 );
-        light.castShadow = true;
-        light.shadow.camera.near = 5;
-        light.shadow.camera.far = 60;
-        light.shadow.bias = - 0.15;
-        // light.color.setHex( 0x00ffff );
-
-        scene.add( light );
-        const axesHelper = new THREE.AxesHelper( 500 );
-        scene.add( axesHelper );
-
-        const backLight = new THREE.PointLight( 0xffffff, 1, 90 );
-        backLight.position.set( 300, 300, 300 );
-        scene.add( backLight );
-
-        const ambientLight = new THREE.AmbientLight( 0xffffff, 0.8);
-        scene.add( ambientLight );
-
         const geometry = new THREE.PlaneBufferGeometry( WORLD_SIZE, WORLD_SIZE);
         const material = new THREE.MeshPhongMaterial( {color: 0x808080, side: THREE.DoubleSide, shininess: 10 } );
         const plane = new THREE.Mesh( geometry, material );
@@ -63,6 +44,28 @@ class World {
         scene.add( plane );
 
     }
+}
+
+function createLight() {
+    light = new THREE.PointLight(0xffffff, 0.7, 1000);
+    light.position.copy(new THREE.Vector3(0, 200, 0));
+    light.castShadow = true;
+    light.shadow.camera.near = 5;
+    light.shadow.camera.far = 60;
+    light.shadow.bias = - 0.15;
+    scene.add(light);
+
+    const axesHelper = new THREE.AxesHelper(500);
+    scene.add(axesHelper);
+
+    const backLight = new THREE.PointLight(0xffffff, 1, 90);
+    backLight.position.set( 300, 300, 300 );
+    scene.add(backLight);
+
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+    scene.add(ambientLight);
+
+    return light;
 }
 
 function createScene() {
@@ -84,7 +87,6 @@ function createRenderer() {
     renderer = new THREE.WebGLRenderer( { antialias: true, alpha: true } );
     renderer.setPixelRatio( window.devicePixelRatio );
     renderer.setSize( window.innerWidth, window.innerHeight );
-
 
     return renderer;
 }

@@ -7,10 +7,11 @@ const clock = new THREE.Clock();
 
 
 class Loop {
-    constructor(camera, scene, renderer) {
+    constructor(camera, scene, renderer, light) {
         this.camera = camera;
         this.scene = scene;
         this.renderer = renderer;
+        this.light = light;
         this.gameState = new GameState();
     }
 
@@ -36,6 +37,7 @@ class Loop {
         let medic = this.gameState.medic;
         this.camera.position.copy(CAMERA_INITIAL_POSITION)
         this.camera.position.add(medic.stickman.position);
+        this.light.position.set(medic.stickman.position.x, 200, medic.stickman.position.z);
 
     }
 }
