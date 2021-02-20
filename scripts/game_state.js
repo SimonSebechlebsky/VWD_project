@@ -8,7 +8,7 @@ class GameState {
         this.medic = new MedicPerson();
         this.randomPeople = [];
 
-        for (let i = 0; i < 50; i++) {
+        for (let i = 0; i < 10; i++) {
             this.randomPeople.push(new RandomPerson());
         }
     }

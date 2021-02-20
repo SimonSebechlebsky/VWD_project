@@ -31,15 +31,19 @@ class KeyboardInputHandler {
     _onKeyDown(event) {
         switch (event.keyCode) {
             case 87: // w
+            case 38: // up
                 this.keys.forward = true;
                 break;
             case 65: // a
+            case 37: //left
                 this.keys.left = true;
                 break;
             case 83: // s
+            case 40: //down
                 this.keys.backward = true;
                 break;
             case 68: // d
+            case 39: //right
                 this.keys.right = true;
                 break;
             case 32: // SPACE
@@ -54,15 +58,19 @@ class KeyboardInputHandler {
     _onKeyUp(event) {
         switch(event.keyCode) {
             case 87: // w
+            case 38: // up
                 this.keys.forward = false;
                 break;
             case 65: // a
+            case 37: //left
                 this.keys.left = false;
                 break;
             case 83: // s
+            case 40: //down
                 this.keys.backward = false;
                 break;
             case 68: // d
+            case 39: //right
                 this.keys.right = false;
                 break;
             case 32: // SPACE

@@ -6,14 +6,14 @@ import Stickman from "../../models/stickman/index.js";
 
 class Person {
 
-    constructor(inputHandler) {
-        this.stickman = this._createStickman();
+    constructor(inputHandler, position=[0,0,0]) {
+        this.stickman = this._createStickman(position);
         this.moveState = new IdleState(this);
         this.inputHandler = inputHandler;
     }
 
-    _createStickman() {
-        return new Stickman(scene, [0,0,0], [255, 255, 255], (stickman) => stickman.idle());
+    _createStickman(position) {
+        return new Stickman(scene, position, [255, 255, 255], (stickman) => stickman.idle());
     }
 
     tick(delta) {

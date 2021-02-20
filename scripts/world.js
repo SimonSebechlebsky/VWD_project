@@ -14,6 +14,7 @@ let camera;
 let renderer;
 
 const CAMERA_INITIAL_POSITION = new THREE.Vector3(-330,660,-330);
+const WORLD_SIZE = 1300;
 
 
 class World {
@@ -55,7 +56,7 @@ class World {
         const ambientLight = new THREE.AmbientLight( 0xffffff, 0.8);
         scene.add( ambientLight );
 
-        const geometry = new THREE.PlaneBufferGeometry( 1300, 1300, 16 );
+        const geometry = new THREE.PlaneBufferGeometry( WORLD_SIZE, WORLD_SIZE);
         const material = new THREE.MeshPhongMaterial( {color: 0x808080, side: THREE.DoubleSide, shininess: 10 } );
         const plane = new THREE.Mesh( geometry, material );
         plane.rotation.set(Math.PI / 2, 0, 0);

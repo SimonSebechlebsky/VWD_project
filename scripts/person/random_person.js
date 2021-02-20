@@ -20,7 +20,6 @@ class RandomPerson extends Person {
     tick(delta) {
         super.tick(delta);
         this.healthState = this.healthState.update();
-        this.stickman.tick(delta);
     }
 
     beSick() {
