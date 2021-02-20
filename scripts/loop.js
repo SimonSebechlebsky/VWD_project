@@ -1,22 +1,23 @@
 import * as THREE from "https://cdn.skypack.dev/three@0.122.0/build/three.module.js";
-// import { Clock } from 'three';
-import World from "./world.js";
+import GameState from "./game_state.js"
+
+import {CAMERA_INITIAL_POSITION} from "./world.js";
 
 const clock = new THREE.Clock();
+
 
 class Loop {
     constructor(camera, scene, renderer) {
         this.camera = camera;
         this.scene = scene;
         this.renderer = renderer;
-        this.updatables = [];
+        this.gameState = new GameState();
     }
 
     start() {
         this.renderer.setAnimationLoop(() => {
 
             this.tick();
-            // render a frame
             this.renderer.render(this.scene, this.camera);
         });
     }
@@ -27,9 +28,15 @@ class Loop {
 
     tick() {
         const delta = clock.getDelta();
-        for (const object of this.updatables) {
+
+        for (const object of this.gameState.updatables()) {
             object.tick(delta);
         }
+
+        let medic = this.gameState.medic;
+        this.camera.position.copy(CAMERA_INITIAL_POSITION)
+        this.camera.position.add(medic.stickman.position);
+
     }
 }
 

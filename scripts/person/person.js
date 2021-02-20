@@ -9,7 +9,6 @@ class Person {
     constructor(inputHandler) {
         this.stickman = this._createStickman();
         this.moveState = new IdleState(this);
-
         this.inputHandler = inputHandler;
     }
 

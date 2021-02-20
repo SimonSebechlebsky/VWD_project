@@ -6,6 +6,7 @@ import Stickman from "../../models/stickman/index.js";
 import {scene} from "../world.js";
 
 class MedicPerson extends Person {
+
     constructor() {
         super(new KeyboardInputHandler());
     }

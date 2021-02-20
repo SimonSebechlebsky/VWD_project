@@ -14,11 +14,10 @@ class IdleState extends PersonState {
         let directionKeys = ['forward','backward', 'left', 'right'];
 
         if (_.intersection(input, directionKeys).length > 0) {
-            return new WalkingState(this.person);
-
             if (input.includes('run')) {
                 return new RunningState(this.person)
             }
+            return new WalkingState(this.person);
 
         }
         return this;

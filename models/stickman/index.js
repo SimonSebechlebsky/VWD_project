@@ -9,7 +9,7 @@ class Stickman {
         this.scene_obj = null;
         this.mixer = null;
         this.color = new THREE.Color(color[0]/255, color[1]/255, color[2]/255);
-        this.position = position;
+        this.position = new THREE.Vector3(...position);
         this.scene = scene;
         this.animations = {};
         this.loadingCallback = loadingCallback;
@@ -24,12 +24,17 @@ class Stickman {
     }
 
     move(vector) {
-        // console.log(vector)
+        if (!this.loaded) {
+            return;
+        }
         this.position.add(vector);
-        // console.log(this.scene_obj.position);
     }
 
     setOrientation(directions) {
+        if (!this.loaded) {
+            return;
+        }
+
         let orientations = {
             forward: THREE.Math.degToRad(45),
             left: THREE.Math.degToRad(135),
@@ -63,8 +68,8 @@ class Stickman {
         this.color = color;
 
         this.scene.add(this.scene_obj);
-        this.scene_obj.position.set(...this.position);
-        this.position = this.scene_obj.position;
+        this.scene_obj.position.copy(this.position);
+        this.position = this.scene_obj.position; //create reference;
 
         this.mixer = new THREE.AnimationMixer(this.scene_obj);
         this._loadAnimations(gltf);

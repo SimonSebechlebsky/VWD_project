@@ -12,7 +12,8 @@ let loop;
 let scene;
 let camera;
 let renderer;
-let controls;
+
+const CAMERA_INITIAL_POSITION = new THREE.Vector3(-330,660,-330);
 
 
 class World {
@@ -22,23 +23,6 @@ class World {
         renderer = createRenderer();
         loop = new Loop(camera, scene, renderer);
         document.body.appendChild( renderer.domElement );
-
-        // controls = new OrbitControls( camera, renderer.domElement );
-        // controls.minDistance = 80;
-        // controls.enableDamping = true;
-        //
-        // window.addEventListener( 'resize', function () {
-        //     camera.aspect = window.innerWidth / window.innerHeight;
-        //     camera.updateProjectionMatrix();
-        //     renderer.setSize( window.innerWidth, window.innerHeight );
-        // }, false );
-    }
-
-
-    render () {
-        requestAnimationFrame( render );
-        renderer.render( scene, camera );
-        controls.update();
     }
 
     start() {
@@ -50,11 +34,7 @@ class World {
     }
 
     initialize() {
-        let medic = new MedicPerson();
-        let random1 = new RandomPerson();
 
-        loop.updatables.push(medic);
-        loop.updatables.push(random1);
 
         const light = new THREE.PointLight( 0xffffff, 0.7, 1000 );
         light.position.set( -300, 300, 300 );
@@ -93,7 +73,7 @@ function createScene() {
 
 function createCamera() {
     camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 0.1, 3000 );
-    camera.position.set(-330, 660, -330);
+    camera.position.copy(CAMERA_INITIAL_POSITION);
     camera.lookAt(new THREE.Vector3(0,0,0));
 
     return camera;
@@ -109,5 +89,5 @@ function createRenderer() {
 }
 
 
-export { World, scene };
+export { World, scene, CAMERA_INITIAL_POSITION };
 export default World;

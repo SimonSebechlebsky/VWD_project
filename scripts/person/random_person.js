@@ -2,28 +2,28 @@ import Person from './person.js';
 import {HealthyPersonState, IllPersonState, InfectedPersonState, ImmunePersonState} from "./states/health_person_states.js";
 import Stickman from "../../models/stickman/index.js";
 import {scene} from "../world.js";
-import KeyboardInputHandler from "../keyboard_input_handler.js";
+import RandomBotInputHandler from "../random_bot_input_handler.js";
 
 class RandomPerson extends Person {
 
     constructor() {
-        super(new KeyboardInputHandler());
+        super(new RandomBotInputHandler());
         this.healthState = new InfectedPersonState(this);
         this.infected = false;
         this.vaccinated = false;
     }
 
     _createStickman() {
-
-        return new Stickman(scene, [100,100,0], [255, 255, 255], (stickman) => stickman.walk());
+        return new Stickman(scene, [0,0,0], [255, 255, 255], (stickman) => stickman.walk());
     }
 
     tick(delta) {
+        super.tick(delta);
         this.healthState = this.healthState.update();
         this.stickman.tick(delta);
     }
 
-    be_sick() {
+    beSick() {
         //this.healthState = new InfectedPersonState(this);
     }
 }
