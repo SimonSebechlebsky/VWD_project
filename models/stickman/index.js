@@ -8,7 +8,7 @@ class Stickman {
     constructor(scene, position, color, loadingCallback=null) {
         this.scene_obj = null;
         this.mixer = null;
-        this.color = color;
+        this.color = new THREE.Color(color[0]/255, color[1]/255, color[2]/255);
         this.position = position;
         this.scene = scene;
         this.animations = {};
@@ -20,13 +20,12 @@ class Stickman {
     }
 
     setColor(color) {
-        this.scene_obj.children[0].children[0].children[0].children[0].children[0]
-            .children[1].children[0].children[2].material.color.setHex(color)
+        this.color.setRGB(color[0]/255, color[1]/255, color[2]/255);
     }
 
     move(vector) {
         // console.log(vector)
-        this.scene_obj.position.add(vector);
+        this.position.add(vector);
         // console.log(this.scene_obj.position);
     }
 
@@ -57,9 +56,15 @@ class Stickman {
     _loadGLTF(gltf) {
         this.scene_obj = gltf.scene;
         this.scene_obj.scale.set(100, 100, 100);
-        this.setColor(this.color)
+
+        let color = this.scene_obj.children[0].children[0].children[0].children[0].children[0]
+            .children[1].children[0].children[2].material.color;
+        color.copy(this.color);
+        this.color = color;
+
         this.scene.add(this.scene_obj);
         this.scene_obj.position.set(...this.position);
+        this.position = this.scene_obj.position;
 
         this.mixer = new THREE.AnimationMixer(this.scene_obj);
         this._loadAnimations(gltf);
@@ -69,7 +74,7 @@ class Stickman {
         this.loaded = true;
 
         if (this.loadingCallback) {
-            this.loadingCallback(this)
+            this.loadingCallback(this);
         }
 
     }

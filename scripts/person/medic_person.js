@@ -11,7 +11,7 @@ class MedicPerson extends Person {
     }
 
     _createStickman() {
-        return new Stickman(scene, [0,0,0], 0x33BEFF, (stickman) => stickman.idle());
+        return new Stickman(scene, [0,0,0], [51, 190, 255], (stickman) => stickman.idle());
     }
 }
 

@@ -3,8 +3,8 @@ import { OrbitControls } from "https://cdn.skypack.dev/three@0.122.0/examples/js
 
 import gsap from 'https://cdn.skypack.dev/gsap@3.5.1';
 
-// import Stickman from '../models/stickman/index.js';
-import MedicPerson from './person/medic_person.js'
+import MedicPerson from './person/medic_person.js';
+import RandomPerson from "./person/random_person.js";
 import KeyboardInputHandler from './keyboard_input_handler.js'
 import Loop from './loop.js';
 //
@@ -51,8 +51,10 @@ class World {
 
     initialize() {
         let medic = new MedicPerson();
+        let random1 = new RandomPerson();
 
         loop.updatables.push(medic);
+        loop.updatables.push(random1);
 
         const light = new THREE.PointLight( 0xffffff, 0.7, 1000 );
         light.position.set( -300, 300, 300 );
@@ -60,6 +62,7 @@ class World {
         light.shadow.camera.near = 5;
         light.shadow.camera.far = 60;
         light.shadow.bias = - 0.15;
+        // light.color.setHex( 0x00ffff );
 
         scene.add( light );
         const axesHelper = new THREE.AxesHelper( 500 );
@@ -73,7 +76,7 @@ class World {
         scene.add( ambientLight );
 
         const geometry = new THREE.PlaneBufferGeometry( 1300, 1300, 16 );
-        const material = new THREE.MeshPhongMaterial( {color: 808080, side: THREE.DoubleSide, shininess: 10 } );
+        const material = new THREE.MeshPhongMaterial( {color: 0x808080, side: THREE.DoubleSide, shininess: 10 } );
         const plane = new THREE.Mesh( geometry, material );
         plane.rotation.set(Math.PI / 2, 0, 0);
         scene.add( plane );
@@ -90,12 +93,8 @@ function createScene() {
 
 function createCamera() {
     camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 0.1, 3000 );
-    camera.position.set(-330,660,-330);
+    camera.position.set(-330, 660, -330);
     camera.lookAt(new THREE.Vector3(0,0,0));
-
-    // controls = new OrbitControls( camera, renderer.domElement );
-    // controls.minDistance = 80;
-    // controls.enableDamping = true;
 
     return camera;
 }

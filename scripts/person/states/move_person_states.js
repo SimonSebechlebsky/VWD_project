@@ -9,6 +9,7 @@ class IdleState extends PersonState {
         super(person);
         this.enter();
     }
+
     update(input) {
         let directionKeys = ['forward','backward', 'left', 'right'];
 

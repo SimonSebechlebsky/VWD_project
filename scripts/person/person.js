@@ -14,7 +14,7 @@ class Person {
     }
 
     _createStickman() {
-        return new Stickman(scene, [0,0,0], 0xFFFFFF, (stickman) => stickman.idle());
+        return new Stickman(scene, [0,0,0], [255, 255, 255], (stickman) => stickman.idle());
     }
 
     tick(delta) {
