@@ -2,6 +2,7 @@ import _ from 'https://cdn.skypack.dev/lodash';
 import * as THREE from "https://cdn.skypack.dev/three@v0.122.0/build/three.module.js";
 
 import {PersonState} from "./person_state.js";
+import {WORLD_SIZE} from "../../world.js";
 
 class IdleState extends PersonState {
 
@@ -52,6 +53,19 @@ class WalkingState extends PersonState  {
         return _.intersection(input, directionKeys);
     }
 
+    canMove(vector) {
+        let stickmanPosition = new THREE.Vector3().copy(this.person.stickman.position);
+        let endPosition = stickmanPosition.add(vector);
+
+        let worldEnd = WORLD_SIZE/2;
+
+        return !(endPosition.x <= -worldEnd ||
+            endPosition.x >= worldEnd ||
+            endPosition.z >= worldEnd ||
+            endPosition.z <= -worldEnd);
+
+    }
+
     moveVector(input) {
        let moveVector = new THREE.Vector3(0,0,0);
 
@@ -65,6 +79,12 @@ class WalkingState extends PersonState  {
     }
 
     move(input) {
+        let moveVector = this.moveVector(input);
+        let canMove = this.canMove(moveVector);
+
+        if (!canMove) {
+            return;
+        }
         this.person.stickman.move(this.moveVector(input));
         this.person.stickman.setOrientation(this._filterDirections(input));
     }
