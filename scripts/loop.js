@@ -37,7 +37,7 @@ class Loop {
         let medic = this.gameState.medic;
         this.camera.position.copy(CAMERA_INITIAL_POSITION)
         this.camera.position.add(medic.stickman.position);
-        this.light.position.set(medic.stickman.position.x, 200, medic.stickman.position.z);
+        this.light.position.set(medic.stickman.position.x, 700, medic.stickman.position.z);
 
     }
 }

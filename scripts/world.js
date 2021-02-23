@@ -41,18 +41,22 @@ class World {
         const material = new THREE.MeshPhongMaterial( {color: 0x808080, side: THREE.DoubleSide, shininess: 10 } );
         const plane = new THREE.Mesh( geometry, material );
         plane.rotation.set(Math.PI / 2, 0, 0);
+        plane.receiveShadow = true;
         scene.add( plane );
 
     }
 }
 
 function createLight() {
-    light = new THREE.PointLight(0xffffff, 0.7, 1000);
+    light = new THREE.PointLight(0xffffff, 0.9, 1000);
     light.position.copy(new THREE.Vector3(0, 200, 0));
     light.castShadow = true;
-    light.shadow.camera.near = 5;
-    light.shadow.camera.far = 60;
-    light.shadow.bias = - 0.15;
+    light.shadow.camera.near = 50;
+    light.shadow.camera.far = 1000;
+    light.shadow.bias = 0.00001;
+    light.shadow.mapSize.width = 800;
+    light.shadow.mapSize.height = 800;
+    light.shadow.radius = 5;
     scene.add(light);
 
     const axesHelper = new THREE.AxesHelper(500);
@@ -85,6 +89,8 @@ function createCamera() {
 
 function createRenderer() {
     renderer = new THREE.WebGLRenderer( { antialias: true, alpha: true } );
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     renderer.setPixelRatio( window.devicePixelRatio );
     renderer.setSize( window.innerWidth, window.innerHeight );
 

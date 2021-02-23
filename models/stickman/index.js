@@ -64,6 +64,10 @@ class Stickman {
 
         let color = this.scene_obj.children[0].children[0].children[0].children[0].children[0]
             .children[1].children[0].children[2].material.color;
+
+        this.scene_obj.children[0].children[0].children[0].children[0].children[0]
+            .children[1].children[0].children[2].castShadow = true;
+
         color.copy(this.color);
         this.color = color;
 

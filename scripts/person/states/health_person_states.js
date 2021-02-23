@@ -8,15 +8,19 @@ class HealthyPersonState extends PersonState {
     }
 
     update() {
-
-        if (this.person.infected) {
+        if (this.person.vaccinated) {
+            this.person.infected = false;
+            return new ImmunePersonState(this.person);
+        }
+        else if (this.person.infected) {
             return new InfectedPersonState(this.person);
         }
+
         return this;
     }
 
     enter() {
-        this.person.stickman.color = [255, 255, 255];
+        this.person.stickman.setColor([255, 255, 255]);
     }
 }
 
@@ -30,8 +34,10 @@ class IllPersonState extends PersonState {
 
     update() {
         if (Date.now() > this.illFrom + 10000) {
+            this.person.infected = false;
             return new ImmunePersonState(this.person);
         }
+
         return this;
     }
 
@@ -57,18 +63,19 @@ class InfectedPersonState extends PersonState {
         let g = Math.round(val) + 77;
         let b = Math.round(val) + 77;
 
-        if (Date.now() > (this.infectedFrom + 5000)) {
+        if (this.person.vaccinated) {
+            this.person.infected = false;
+            return new ImmunePersonState(this.person);
+        }
+        else if (Date.now() > (this.infectedFrom + 5000)) {
             return new IllPersonState(this.person);
         }
-        if (this.person.stickman.loaded) {
-            this.person.stickman.setColor([r, g, b]);
-        }
-
+        this.person.stickman.setColor([r, g, b]);
         return this;
     }
 
     enter() {
-        this.person.stickman.color = [255, 230, 230];
+        this.person.stickman.setColor([255, 230, 230]);
     }
 }
 

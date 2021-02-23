@@ -71,7 +71,7 @@ class WalkingState extends PersonState  {
 
     update(input) {
 
-        if (!this._filterDirections(input).length ) {
+        if (!this._filterDirections(input).length) {
             return new IdleState(this.person);
         }
 
@@ -100,7 +100,7 @@ class RunningState extends WalkingState {
     }
 
     update(input) {
-        if (!this._filterDirections(input).length ) {
+        if (!this._filterDirections(input).length) {
             return new IdleState(this.person);
         }
 
