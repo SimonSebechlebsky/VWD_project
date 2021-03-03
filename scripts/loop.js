@@ -1,5 +1,4 @@
 import * as THREE from "https://cdn.skypack.dev/three@0.122.0/build/three.module.js";
-import GameState from "./game_state.js"
 
 import {CAMERA_INITIAL_POSITION} from "./world.js";
 
@@ -31,15 +30,21 @@ class Loop {
     tick() {
         const delta = clock.getDelta();
 
-        for (const object of this.gameState.updatables()) {
-            object.tick(delta);
-        }
-        this.collisionDetection.update();
 
-        let medic = this.gameState.medic;
+        this.gameState.update(delta);
+
+        let medic = this.gameState.levelState.medic;
         this.camera.position.copy(CAMERA_INITIAL_POSITION)
         this.camera.position.add(medic.stickman.position);
         this.light.position.set(medic.stickman.position.x, 700, medic.stickman.position.z);
+
+    }
+
+    update_camera(level_state) {
+
+    }
+
+    update_light(level_state) {
 
     }
 }

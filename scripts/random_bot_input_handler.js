@@ -18,7 +18,16 @@ class RandomBotInputHandler {
         this.maxMoveInterval=maxMoveInterval*1000;
         this.nextChangeTime = this.nextMoveTime()
         this.nearEdge = false;
+        this.idle = true;
 
+    }
+
+    beIdle() {
+        this.idle = true;
+    }
+
+    move() {
+        this.idle = false;
     }
 
     nextMoveTime() {
@@ -61,6 +70,9 @@ class RandomBotInputHandler {
 
 
     getInput() {
+        if (this.idle) {
+            return [];
+        }
 
         this.checkMapBoundaries()
         if (new Date().getTime() >= this.nextChangeTime) {

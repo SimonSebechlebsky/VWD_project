@@ -1,3 +1,4 @@
+import {gameState} from './world.js'
 
 class KeyboardInputHandler {
     constructor() {
@@ -15,6 +16,10 @@ class KeyboardInputHandler {
     }
 
     getInput() {
+        if (gameState.paused) {
+            return [];
+        }
+
         let pressedKeys = [];
 
         for (const key in this.keys) {

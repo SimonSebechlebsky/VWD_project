@@ -1,0 +1,70 @@
+/**
+ * index.scss
+ * - Add any styles you want here!
+ */
+canvas {
+  display: block;
+}
+
+html {
+  overflow: hidden;
+  background: #fff8cd;
+  color: #000;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+/*button{*/
+/*  margin:auto;*/
+/*  position:absolute;*/
+/*}*/
+
+#background {
+  position: absolute;
+  background: rgba(255,255,255,0.3);
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  /*display: flex;*/
+  /*justify-content: center;*/
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+}
+
+#instructions {
+  font-family: Monaco;
+  font-size:20px;
+  font-weight:200;
+
+}
+
+.inner {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  text-align: center;
+  transform: translate(-50%, -50%);
+  /*transform: translate(50%,50%);*/
+}
+
+/* BUTTON STYLES */
+button{
+  padding:16px 32px;
+  width: 200px;
+  height:65px;
+  margin: auto;
+  font-family: Monaco;
+  font-size:20px;
+  font-weight:200;
+  color:#fff;
+  background: #587286;
+  border:0;
+  font-weight:100;
+}
+button:hover{
+  background: #3B5C76;
+}

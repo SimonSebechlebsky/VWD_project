@@ -9,7 +9,7 @@ import KeyboardInputHandler from './keyboard_input_handler.js'
 import GameState from "./game_state.js";
 import Loop from './loop.js';
 import {CollisionDetection} from './collision_detection.js'
-//
+
 let loop;
 let scene;
 let camera;
@@ -29,7 +29,6 @@ class World {
         renderer = createRenderer();
         light = createLight();
         gameState = new GameState();
-        collisionDetection = new CollisionDetection(gameState);
         loop = new Loop(camera, scene, renderer, light, gameState, collisionDetection);
         document.body.appendChild( renderer.domElement );
     }
