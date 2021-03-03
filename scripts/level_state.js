@@ -5,11 +5,12 @@ import {WORLD_SIZE} from "./world.js";
 
 class LevelState {
 
-    constructor(peopleCount) {
+    constructor(healthyPeopleCount, illPeopleCount) {
         this.medic = new MedicPerson();
         this.randomPeople = new Map();
+        // this.illPeople = new Map();
 
-        for (let i = 0; i < peopleCount; i++) {
+        for (let i = 0; i < healthyPeopleCount; i++) {
             let person = new RandomPerson([
                 this.randomCoordinate(),
                 0,
@@ -18,8 +19,15 @@ class LevelState {
             this.randomPeople.set(person.uuid, person);
         }
 
-        // illPerson = new RandomPerson([this.randomCoordinate(), 0, this.randomCoordinate()]);
-        // this.illPerson.beSick();
+        for (let i = 0; i < illPeopleCount; i++) {
+            let person = new RandomPerson([
+                this.randomCoordinate(),
+                0,
+                this.randomCoordinate()
+            ], 'ill');
+            this.randomPeople.set(person.uuid, person);
+        }
+
     }
 
     randomCoordinate() {

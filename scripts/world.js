@@ -1,14 +1,6 @@
 import * as THREE from "https://cdn.skypack.dev/three@v0.122.0/build/three.module.js";
-import { OrbitControls } from "https://cdn.skypack.dev/three@0.122.0/examples/jsm/controls/OrbitControls.js";
-
-import gsap from 'https://cdn.skypack.dev/gsap@3.5.1';
-
-import MedicPerson from './person/medic_person.js';
-import RandomPerson from "./person/random_person.js";
-import KeyboardInputHandler from './keyboard_input_handler.js'
 import GameState from "./game_state.js";
 import Loop from './loop.js';
-import {CollisionDetection} from './collision_detection.js'
 
 let loop;
 let scene;
@@ -62,9 +54,6 @@ function createLight() {
     light.shadow.mapSize.height = 800;
     light.shadow.radius = 5;
     scene.add(light);
-
-    const axesHelper = new THREE.AxesHelper(500);
-    scene.add(axesHelper);
 
     const backLight = new THREE.PointLight(0xffffff, 1, 90);
     backLight.position.set( 300, 300, 300 );

@@ -1,4 +1,3 @@
-
 import Person from './person.js'
 
 import KeyboardInputHandler from "../keyboard_input_handler.js";
@@ -19,8 +18,6 @@ class MedicPerson extends Person {
         let nearbyPeople = gameState.collisionDetection.findNearby(this.stickman.position.x, this.stickman.position.y,
             this.stickman.position.z);
         let people = gameState.levelState.randomPeople;
-        console.log(people);
-        console.log(nearbyPeople);
         if (nearbyPeople[0]) {
             let nearbyPerson = people.get(nearbyPeople[0].id);
             nearbyPerson.vaccinated = true;
@@ -28,14 +25,12 @@ class MedicPerson extends Person {
         }
     }
 
-
     tick(delta) {
         let input = super.tick(delta);
 
         if (input.includes("space")) {
             this.vaccinate();
         }
-
     }
 }
 

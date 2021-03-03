@@ -26,29 +26,6 @@ class HealthyPersonState extends PersonState {
 }
 
 
-class IllPersonState extends PersonState {
-    constructor(person) {
-        super(person);
-        this.illFrom = Date.now();
-        this.enter();
-        this.name = "ill";
-    }
-
-    update() {
-        if (Date.now() > this.illFrom + 10000) {
-            this.person.infected = false;
-            return new ImmunePersonState(this.person);
-        }
-
-        return this;
-    }
-
-    enter() {
-        this.person.stickman.setColor([255, 0, 0]);
-    }
-
-}
-
 class InfectedPersonState extends PersonState {
     constructor(person) {
         super(person);
@@ -81,6 +58,31 @@ class InfectedPersonState extends PersonState {
         this.person.stickman.setColor([255, 230, 230]);
     }
 }
+
+
+class IllPersonState extends PersonState {
+    constructor(person) {
+        super(person);
+        this.illFrom = Date.now();
+        this.enter();
+        this.name = "ill";
+    }
+
+    update() {
+        if (Date.now() > this.illFrom + 10000) {
+            this.person.infected = false;
+            return new ImmunePersonState(this.person);
+        }
+
+        return this;
+    }
+
+    enter() {
+        this.person.stickman.setColor([255, 0, 0]);
+    }
+
+}
+
 
 class ImmunePersonState extends PersonState {
     constructor(person) {

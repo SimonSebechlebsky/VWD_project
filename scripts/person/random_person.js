@@ -38,9 +38,8 @@ class RandomPerson extends Person {
     // }
 
 
-    beSick() {
+    beInfected() {
         this.infected = true;
-        //this.healthState = new InfectedPersonState(this);
     }
 }
 
