@@ -6,13 +6,17 @@ import gsap from 'https://cdn.skypack.dev/gsap@3.5.1';
 import MedicPerson from './person/medic_person.js';
 import RandomPerson from "./person/random_person.js";
 import KeyboardInputHandler from './keyboard_input_handler.js'
+import GameState from "./game_state.js";
 import Loop from './loop.js';
+import {CollisionDetection} from './collision_detection.js'
 //
 let loop;
 let scene;
 let camera;
 let renderer;
 let light;
+let gameState;
+let collisionDetection;
 
 const CAMERA_INITIAL_POSITION = new THREE.Vector3(-330,660,-330);
 const WORLD_SIZE = 1300;
@@ -24,7 +28,9 @@ class World {
         camera = createCamera();
         renderer = createRenderer();
         light = createLight();
-        loop = new Loop(camera, scene, renderer, light);
+        gameState = new GameState();
+        collisionDetection = new CollisionDetection(gameState);
+        loop = new Loop(camera, scene, renderer, light, gameState, collisionDetection);
         document.body.appendChild( renderer.domElement );
     }
 
@@ -43,7 +49,6 @@ class World {
         plane.rotation.set(Math.PI / 2, 0, 0);
         plane.receiveShadow = true;
         scene.add( plane );
-
     }
 }
 
@@ -98,5 +103,5 @@ function createRenderer() {
 }
 
 
-export { World, scene, CAMERA_INITIAL_POSITION, WORLD_SIZE };
+export { World, scene, CAMERA_INITIAL_POSITION, WORLD_SIZE, gameState, collisionDetection };
 export default World;

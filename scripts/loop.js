@@ -7,12 +7,13 @@ const clock = new THREE.Clock();
 
 
 class Loop {
-    constructor(camera, scene, renderer, light) {
+    constructor(camera, scene, renderer, light, gameState, collisionDetection) {
         this.camera = camera;
         this.scene = scene;
         this.renderer = renderer;
         this.light = light;
-        this.gameState = new GameState();
+        this.gameState = gameState;
+        this.collisionDetection = collisionDetection;
     }
 
     start() {
@@ -33,6 +34,7 @@ class Loop {
         for (const object of this.gameState.updatables()) {
             object.tick(delta);
         }
+        this.collisionDetection.update();
 
         let medic = this.gameState.medic;
         this.camera.position.copy(CAMERA_INITIAL_POSITION)

@@ -1,0 +1,8 @@
+
+
+class DiseaseSpreading {
+
+    constructor(gameState) {
+    }
+
+}

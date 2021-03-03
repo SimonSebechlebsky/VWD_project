@@ -3,6 +3,7 @@ import {scene} from '../world.js'
 import {IdleState, WalkingState, RunningState} from "./states/move_person_states.js";
 import Stickman from "../../models/stickman/index.js";
 
+import {v4 as uuid} from 'https://cdn.skypack.dev/@lukeed/uuid';
 
 class Person {
 
@@ -10,6 +11,8 @@ class Person {
         this.stickman = this._createStickman(position);
         this.moveState = new IdleState(this);
         this.inputHandler = inputHandler;
+        this.uuid = uuid();
+        this.nearbyObj = null;
     }
 
     _createStickman(position) {
@@ -17,8 +20,11 @@ class Person {
     }
 
     tick(delta) {
-        this.moveState = this.moveState.update(this.inputHandler.getInput());
+        let input = this.inputHandler.getInput();
+        this.moveState = this.moveState.update(input);
+
         this.stickman.tick(delta);
+        return input;
     }
 
 }

@@ -9,13 +9,15 @@ class GameState {
         this.medic = new MedicPerson();
         this.randomPeople = [];
 
-        for (let i = 0; i < 20; i++) {
+        for (let i = 0; i < 10; i++) {
             this.randomPeople.push(new RandomPerson([
                 this.randomCoordinate(),
                 0,
                 this.randomCoordinate()
             ]));
         }
+        this.illPerson = new RandomPerson([this.randomCoordinate(), 0, this.randomCoordinate()]);
+        this.illPerson.beSick();
     }
 
     randomCoordinate() {
@@ -24,7 +26,7 @@ class GameState {
 
 
     updatables() {
-        return [this.medic, ...this.randomPeople];
+        return [this.medic, ...this.randomPeople, this.illPerson];
     }
 }
 

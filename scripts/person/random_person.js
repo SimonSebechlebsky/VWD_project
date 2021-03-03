@@ -10,7 +10,7 @@ class RandomPerson extends Person {
         super(null, position);
         // can't be set via super constructor, "this" is not allowed before super
         this.inputHandler = new RandomBotInputHandler(this.stickman);
-        this.healthState = new InfectedPersonState(this);
+        this.healthState = new HealthyPersonState(this);
         this.infected = false;
         this.vaccinated = false;
     }

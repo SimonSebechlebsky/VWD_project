@@ -5,6 +5,7 @@ class HealthyPersonState extends PersonState {
     constructor(person) {
         super(person);
         this.enter();
+        this.name = "healthy";
     }
 
     update() {
@@ -30,6 +31,7 @@ class IllPersonState extends PersonState {
         super(person);
         this.illFrom = Date.now();
         this.enter();
+        this.name = "ill";
     }
 
     update() {
@@ -52,6 +54,7 @@ class InfectedPersonState extends PersonState {
         super(person);
         this.infectedFrom = Date.now();
         this.enter();
+        this.name = "infected";
     }
 
     update() {
@@ -83,6 +86,7 @@ class ImmunePersonState extends PersonState {
     constructor(person) {
         super(person);
         this.enter();
+        this.name = "immune";
     }
 
     update() {
