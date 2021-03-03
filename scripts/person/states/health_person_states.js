@@ -11,7 +11,7 @@ class HealthyPersonState extends PersonState {
     update() {
         if (this.person.vaccinated) {
             this.person.infected = false;
-            return new ImmunePersonState(this.person);
+            return new CuredPersonState(this.person);
         }
         else if (this.person.infected) {
             return new InfectedPersonState(this.person);
@@ -45,7 +45,7 @@ class InfectedPersonState extends PersonState {
 
         if (this.person.vaccinated) {
             this.person.infected = false;
-            return new ImmunePersonState(this.person);
+            return new CuredPersonState(this.person);
         }
         else if (Date.now() > (this.infectedFrom + 5000)) {
             if (this.person.illCallBack) {
@@ -99,7 +99,24 @@ class ImmunePersonState extends PersonState {
     }
 
     enter() {
-        this.person.stickman.setColor([255, 185, 15]);
+        this.person.stickman.setColor([255, 179, 0]);
+    }
+}
+
+
+class CuredPersonState extends PersonState {
+    constructor(person) {
+        super(person);
+        this.enter();
+        this.name = 'cured';
+    }
+
+    update() {
+        return this;
+    }
+
+    enter() {
+        this.person.stickman.setColor([255, 217, 128]);
     }
 }
 

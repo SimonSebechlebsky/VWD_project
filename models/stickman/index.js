@@ -1,4 +1,3 @@
-import { Group } from "https://cdn.skypack.dev/three@0.122.0/build/three.module.js";
 import { GLTFLoader } from "https://cdn.skypack.dev/three@0.122.0/examples/jsm/loaders/GLTFLoader.js";
 import * as THREE from "https://cdn.skypack.dev/three@v0.122.0/build/three.module.js";
 import _ from 'https://cdn.skypack.dev/lodash';
