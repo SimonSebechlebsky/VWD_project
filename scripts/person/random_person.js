@@ -6,7 +6,7 @@ import RandomBotInputHandler from "../random_bot_input_handler.js";
 
 class RandomPerson extends Person {
 
-    constructor(position=[0,0,0], healthState='healthy') {
+    constructor(position= [0,0,0], healthState='healthy') {
         super(null, position);
 
         let healthStates = {
@@ -38,8 +38,9 @@ class RandomPerson extends Person {
     // }
 
 
-    beInfected() {
+    beInfected(illCallBack) {
         this.infected = true;
+        this.illCallBack = illCallBack;
     }
 }
 

@@ -11,8 +11,8 @@ class CollisionDetection {
     create() {
         const binSize = 7;
         const nearby = new Nearby(WORLD_SIZE, 100, WORLD_SIZE, binSize);
-        let healthyPeople = this.getHealthyPeople();
-        for (let person of healthyPeople.values()) {
+        let people = this.getPeople();
+        for (let person of people.values()) {
             const box = nearby.createBox(person.stickman.position.x,
                 person.stickman.position.y, person.stickman.position.z,
                 44, 75, 44
@@ -24,8 +24,8 @@ class CollisionDetection {
     }
 
     update() {
-        let healthyPeople = this.getHealthyPeople();
-        for (let person of healthyPeople.values()) {
+        let people = this.getPeople();
+        for (let person of people.values()) {
             this.nearby.update(
                 person.nearbyObj, person.stickman.position.x, person.stickman.position.y,
                 person.stickman.position.z,
@@ -58,10 +58,10 @@ class CollisionDetection {
         return illPeople;
     }
 
-    getHealthyPeople() {
+    getPeople() {
         let healthyPeople = new Map();
         for (let person of this.randomPeople.values()) {
-            if (person.healthState.name === 'healthy') {
+            if (person.healthState.name === 'healthy' || person.healthState.name === 'infected') {
                 healthyPeople.set(person.uuid, person);
             }
         }

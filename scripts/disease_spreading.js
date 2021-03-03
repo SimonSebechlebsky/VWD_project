@@ -1,5 +1,3 @@
-import {gameState} from "./world.js";
-
 
 class DiseaseSpreading {
 
@@ -8,27 +6,25 @@ class DiseaseSpreading {
         this.collisionDetection = collisionDetection;
     }
 
-    infect(illPeople, healthyPeople) {
+    infect(illPeople) {
         for (let person of illPeople.values()) {
             let nearbyPeople = this.collisionDetection.findNearby(person.stickman.position.x,
                 person.stickman.position.y, person.stickman.position.z);
+
             if (nearbyPeople[0]) {
-                console.log(nearbyPeople[0].id)
-                console.log(healthyPeople)
-                console.log(illPeople)
-                let nearbyPerson = healthyPeople.get(nearbyPeople[0].id);
-                console.log(nearbyPerson)
-                nearbyPerson.beInfected();
-                gameState.collisionDetection.remove(nearbyPerson.nearbyObj);
+                let nearbyPerson = this.randomPeople.get(nearbyPeople[0].id);
+                nearbyPerson.beInfected(()=> {
+                    this.collisionDetection.remove(nearbyPerson.nearbyObj);
+                });
             }
         }
     }
 
     update() {
         let illPeople = this.collisionDetection.getIllPeople();
-        let healthyPeople = this.collisionDetection.getHealthyPeople();
+        // let people = this.collisionDetection.getPeople();
 
-        this.infect(illPeople, healthyPeople);
+        this.infect(illPeople);
     }
 
 

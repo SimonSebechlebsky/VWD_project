@@ -48,6 +48,9 @@ class InfectedPersonState extends PersonState {
             return new ImmunePersonState(this.person);
         }
         else if (Date.now() > (this.infectedFrom + 5000)) {
+            if (this.person.illCallBack) {
+                this.person.illCallBack();
+            }
             return new IllPersonState(this.person);
         }
         this.person.stickman.setColor([r, g, b]);
@@ -69,7 +72,7 @@ class IllPersonState extends PersonState {
     }
 
     update() {
-        if (Date.now() > this.illFrom + 10000) {
+        if (Date.now() > this.illFrom + 20000) {
             this.person.infected = false;
             return new ImmunePersonState(this.person);
         }
