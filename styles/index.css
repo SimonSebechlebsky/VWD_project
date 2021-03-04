@@ -42,6 +42,24 @@ html, body {
 
 }
 
+body {
+  /*background: skyblue;*/
+}
+
+#pre_score_ill, #pre_score_vaccinable, #pre_score_vaccinated {
+  /*background: skyblue;*/
+  margin-left: 15px;
+  font-family: Monaco;
+  font-size: 15px;
+
+}
+
+#score {
+  width: 140px;
+  height: 20px;
+  position: absolute;
+}
+
 .inner {
   position: absolute;
   left: 50%;

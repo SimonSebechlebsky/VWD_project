@@ -1,5 +1,5 @@
 import Person from './person.js';
-import {HealthyPersonState, IllPersonState, InfectedPersonState, ImmunePersonState} from "./states/health_person_states.js";
+import {HealthyPersonState, InfectedPersonState, IllPersonState, ImmunePersonState, CuredPersonState} from "./states/health_person_states.js";
 import Stickman from "../../models/stickman/index.js";
 import {scene} from "../world.js";
 import RandomBotInputHandler from "../random_bot_input_handler.js";
@@ -13,7 +13,8 @@ class RandomPerson extends Person {
             'healthy': HealthyPersonState,
             'infected': InfectedPersonState,
             'ill': IllPersonState,
-            'immune': ImmunePersonState
+            'immune': ImmunePersonState,
+            'cured': CuredPersonState
         }
 
         // can't be set via super constructor, "this" is not allowed before super

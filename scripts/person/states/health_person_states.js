@@ -120,4 +120,4 @@ class CuredPersonState extends PersonState {
     }
 }
 
-export {HealthyPersonState, IllPersonState, InfectedPersonState, ImmunePersonState};
+export {HealthyPersonState, InfectedPersonState, IllPersonState, ImmunePersonState, CuredPersonState};

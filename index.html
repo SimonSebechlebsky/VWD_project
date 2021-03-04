@@ -14,12 +14,37 @@
     import {gameState} from './scripts/world.js'
     document.querySelector('#playButton').addEventListener('click', () => gameState.play())
   </script>
+
+  <div id="score">
+    <script type="module">
+      import {gameState} from './scripts/world.js';
+      function printScoreIll() {
+        let illCount = gameState.levelState.getIllPeopleCount();
+        document.getElementById("pre_score_ill").innerHTML = " Ill: " + illCount;
+      }
+      function printScoreVaccinated() {
+        let vaccinatedCount = gameState.levelState.getVaccinatedPeopleCount();
+        document.getElementById("pre_score_vaccinated").innerHTML = " Vaccinated: " + vaccinatedCount;
+      }
+      function printScoreVaccinable() {
+        let vaccinableCount = gameState.levelState.getVaccinablePeopleCount();
+        document.getElementById("pre_score_vaccinable").innerHTML = " Healthy: " + vaccinableCount;
+      }
+      setInterval(printScoreIll, 1000);
+      setInterval(printScoreVaccinated, 1000);
+      setInterval(printScoreVaccinable, 1000);
+    </script>
+    <p id="pre_score_ill"></p>
+    <p id="pre_score_vaccinated"></p>
+    <p id="pre_score_vaccinable"></p>
+  </div>
+
   <div id="background">
     <div class="inner">
       <div id="instructions">
         <p>WSAD or arrows - move</p>
         <p>shift - run</p>
-        <p>spacebar - vaccinate<p/>
+        <p>spacebar - vaccinate</p>
       </div>
       <button id="playButton">Play</button>
     </div>

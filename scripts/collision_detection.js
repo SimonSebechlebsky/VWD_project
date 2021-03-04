@@ -4,15 +4,15 @@ import {WORLD_SIZE} from "./world.js";
 class CollisionDetection {
 
     constructor(levelState) {
-        this.randomPeople = levelState.randomPeople;
+        this.levelState = levelState;
         this.nearby = this.create();
     }
 
     create() {
         const binSize = 7;
         const nearby = new Nearby(WORLD_SIZE, 100, WORLD_SIZE, binSize);
-        let people = this.getPeople();
-        for (let person of people.values()) {
+        let vaccinablePeople = this.levelState.getVaccinablePeople();
+        for (let person of vaccinablePeople.values()) {
             const box = nearby.createBox(person.stickman.position.x,
                 person.stickman.position.y, person.stickman.position.z,
                 44, 75, 44
@@ -24,8 +24,8 @@ class CollisionDetection {
     }
 
     update() {
-        let people = this.getPeople();
-        for (let person of people.values()) {
+        let vaccinablePeople = this.levelState.getVaccinablePeople();
+        for (let person of vaccinablePeople.values()) {
             this.nearby.update(
                 person.nearbyObj, person.stickman.position.x, person.stickman.position.y,
                 person.stickman.position.z,
@@ -46,26 +46,6 @@ class CollisionDetection {
 
     remove(nearbyObj) {
         this.nearby.delete(nearbyObj);
-    }
-
-    getIllPeople() {
-        let illPeople = new Map();
-        for (let person of this.randomPeople.values()) {
-            if (person.healthState.name === 'ill') {
-                illPeople.set(person.uuid, person);
-            }
-        }
-        return illPeople;
-    }
-
-    getPeople() {
-        let healthyPeople = new Map();
-        for (let person of this.randomPeople.values()) {
-            if (person.healthState.name === 'healthy' || person.healthState.name === 'infected') {
-                healthyPeople.set(person.uuid, person);
-            }
-        }
-        return healthyPeople;
     }
 
 }

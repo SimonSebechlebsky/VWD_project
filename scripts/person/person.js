@@ -1,6 +1,6 @@
 import {scene} from '../world.js'
 
-import {IdleState, WalkingState, RunningState} from "./states/move_person_states.js";
+import {IdleState} from "./states/move_person_states.js";
 import Stickman from "../../models/stickman/index.js";
 
 import {v4 as uuid} from 'https://cdn.skypack.dev/@lukeed/uuid';
@@ -26,7 +26,6 @@ class Person {
         this.stickman.tick(delta);
         return input;
     }
-
 }
 
 export default Person;
