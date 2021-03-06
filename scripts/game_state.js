@@ -1,7 +1,7 @@
 import LevelState from "./level_state.js";
 import CountDown from './count_down.js'
 
-import {scene} from './world.js'
+import {collisionDetection, scene} from './world.js'
 import {CollisionDetection} from "./collision_detection.js";
 import {DiseaseSpreading} from "./disease_spreading.js";
 
@@ -16,7 +16,10 @@ class GameState {
         this.countDown = new CountDown(scene, () => {
             this.paused = false;
             this.levelState.unpause();
-        });
+        })
+
+        this.collisionDetectionInterval = 0.5;
+        this.deltaAcc = 0;
     }
 
     play() {
@@ -26,8 +29,12 @@ class GameState {
 
     update(delta) {
         this.levelState.update(delta)
-        this.collisionDetection.update();
-        this.diseaseSpreading.update();
+
+        this.deltaAcc += delta;
+        if (this.deltaAcc > this.collisionDetectionInterval) {
+            this.collisionDetection.update();
+            this.diseaseSpreading.update();
+        }
     }
 }
 
