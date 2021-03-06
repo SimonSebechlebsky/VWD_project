@@ -6,12 +6,9 @@ class PersonState {
     }
 
     update(input) {
+}
 
-    }
-
-    enter() {
-
-    }
+    enter() {}
 
 }
 

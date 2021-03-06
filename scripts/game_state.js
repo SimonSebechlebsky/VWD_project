@@ -25,11 +25,9 @@ class GameState {
     }
 
     update(delta) {
-        this.levelState.updatables().forEach((updatable) => updatable.tick(delta));
+        this.levelState.update(delta)
         this.collisionDetection.update();
         this.diseaseSpreading.update();
-        this.levelState.createVirusIfTime();
-        this.levelState.removeOffViruses();
     }
 }
 

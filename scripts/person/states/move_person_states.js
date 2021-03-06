@@ -11,14 +11,20 @@ class IdleState extends PersonState {
         this.enter();
     }
 
-    update(input) {
+    update(input, delta) {
         let directionKeys = ['forward','backward', 'left', 'right'];
 
         if (_.intersection(input, directionKeys).length > 0) {
             if (input.includes('run')) {
                 return new RunningState(this.person)
             }
-            return new WalkingState(this.person);
+
+
+            if (this.person.type === 'random') {
+                return new WalkingState(this.person);
+            }
+
+            return new QuickWalkingState(this.person);
 
         }
         return this;
@@ -44,7 +50,7 @@ class WalkingState extends PersonState  {
             right: new THREE.Vector3(-1,0,1)
         }
 
-        this.speed = 2;
+        this.speed = 100;
     }
 
     _filterDirections(input) {
@@ -66,30 +72,30 @@ class WalkingState extends PersonState  {
 
     }
 
-    moveVector(input) {
+    moveVector(input, delta) {
        let moveVector = new THREE.Vector3(0,0,0);
 
        this._filterDirections(input).forEach((dir) => moveVector.add(this.directions[dir]));
 
 
        moveVector.normalize();
-       moveVector.multiplyScalar(this.speed);
+       moveVector.multiplyScalar(this.speed*delta);
 
        return moveVector;
     }
 
-    move(input) {
-        let moveVector = this.moveVector(input);
+    move(input, delta) {
+        let moveVector = this.moveVector(input, delta);
         let canMove = this.canMove(moveVector);
 
         if (!canMove) {
             return;
         }
-        this.person.stickman.move(this.moveVector(input));
+        this.person.stickman.move(moveVector);
         this.person.stickman.setOrientation(this._filterDirections(input));
     }
 
-    update(input) {
+    update(input, delta) {
 
         if (!this._filterDirections(input).length) {
             return new IdleState(this.person);
@@ -99,7 +105,7 @@ class WalkingState extends PersonState  {
             return new RunningState(this.person);
         }
 
-        this.move(input);
+        this.move(input, delta);
 
         return this;
     }
@@ -110,25 +116,43 @@ class WalkingState extends PersonState  {
 
 }
 
+class QuickWalkingState extends WalkingState {
+
+    constructor(person) {
+        super(person);
+        this.speed = 200;
+        this.enter();
+    }
+
+    enter() {
+        this.person.stickman.quickWalk();
+    }
+
+}
+
 
 class RunningState extends WalkingState {
 
     constructor(person) {
         super(person);
-        this.speed = 4;
+        this.speed = 400;
         this.enter();
     }
 
-    update(input) {
+    update(input, delta) {
         if (!this._filterDirections(input).length) {
             return new IdleState(this.person);
         }
 
         if (!input.includes('run')) {
-            return new WalkingState(this.person)
+            if (this.person.type === 'random') {
+                return new WalkingState(this.person);
+            }
+
+            return new QuickWalkingState(this.person);
         }
 
-        this.move(input);
+        this.move(input, delta);
 
         return this;
     }

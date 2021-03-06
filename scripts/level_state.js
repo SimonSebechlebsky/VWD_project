@@ -7,12 +7,13 @@ import Virus from './virus.js'
 
 class LevelState {
 
-    constructor(healthyPeopleCount, illPeopleCount, virusInterval=[5,8]) {
+    constructor(healthyPeopleCount, illPeopleCount, virusInterval=[2,3]) {
         this.medic = new MedicPerson();
         this.randomPeople = new Map();
         this.virusInterval = virusInterval;
-        this.nextVirusTime = this.getNextVirusTime()
+        this.nextVirusTime = null;
         this.viruses = [];
+        this.paused = true;
 
 
         for (let i = 0; i < healthyPeopleCount; i++) {
@@ -48,16 +49,33 @@ class LevelState {
         return [this.medic, ...Array.from(this.randomPeople.values()), ...this.viruses];
     }
 
+    update(delta) {
+
+        this.medic.tick(delta);
+        Array.from(this.randomPeople.values()).forEach((person) => person.tick(delta));
+
+        if (!this.paused) {
+            this.viruses.forEach((virus) => virus.tick(delta));
+            this.createVirusIfTime();
+            this.removeOffViruses();
+        }
+
+    }
+
     pause() {
+        this.paused = true;
         for (let person of this.randomPeople.values()) {
             person.inputHandler.beIdle()
         }
+
     }
 
     unpause() {
         for (let person of this.randomPeople.values()) {
             person.inputHandler.move();
         }
+        this.paused = false;
+        this.nextVirusTime = this.getNextVirusTime();
     }
 
     getIllPeopleCount() {
@@ -113,6 +131,7 @@ class LevelState {
         }
 
         if (this.viruses[0].model.position.x < -WORLD_SIZE) { // viruses have the same speed, they are sorted in the array
+            this.viruses[0].destroy();
             this.viruses.shift();
         }
     }

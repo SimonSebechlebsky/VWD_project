@@ -7,9 +7,9 @@ import {scene} from './world.js'
 
 class Virus {
     constructor() {
-        this.model = new VirusModel(scene, [WORLD_SIZE*2,50,Math.random()*WORLD_SIZE-WORLD_SIZE/2]);
+        this.model = new VirusModel(scene, [WORLD_SIZE,50,Math.random()*WORLD_SIZE-WORLD_SIZE/2]);
         this.speed = 150;
-        this.model = this.model;
+        this.paused = true;
     }
 
     tick(delta) {
@@ -28,6 +28,10 @@ class Virus {
 
     rotateVector(delta) {
         return new THREE.Vector3(THREE.Math.degToRad(30)*delta,THREE.Math.degToRad(30)*delta,0);
+    }
+
+    destroy() {
+        scene.remove(this.model.scene_obj);
     }
 
 }

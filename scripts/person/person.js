@@ -21,7 +21,7 @@ class Person {
 
     tick(delta) {
         let input = this.inputHandler.getInput();
-        this.moveState = this.moveState.update(input);
+        this.moveState = this.moveState.update(input, delta);
 
         this.stickman.tick(delta);
         return input;

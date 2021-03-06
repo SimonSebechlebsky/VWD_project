@@ -23,6 +23,7 @@ class RandomPerson extends Person {
         this.infected = false;
         this.vaccinated = false;
         this.idle = true;
+        this.type = 'random';
     }
 
     _createStickman(position) {

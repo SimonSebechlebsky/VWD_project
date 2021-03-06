@@ -8,6 +8,7 @@ class MedicPerson extends Person {
 
     constructor() {
         super(new KeyboardInputHandler(), [0,0,0]);
+        this.type = 'medic';
     }
 
     _createStickman(position) {
