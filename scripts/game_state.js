@@ -28,9 +28,8 @@ class GameState {
         this.levelState.updatables().forEach((updatable) => updatable.tick(delta));
         this.collisionDetection.update();
         this.diseaseSpreading.update();
-        this.levelState.getIllPeopleCount();
-        this.levelState.getVaccinatedPeopleCount();
-        this.levelState.getVaccinablePeopleCount();
+        this.levelState.createVirusIfTime();
+        this.levelState.removeOffViruses();
     }
 }
 

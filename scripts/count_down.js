@@ -23,24 +23,18 @@ class CountDown {
             font: this.font,
             size: 80,
             height: 5,
-            // curveSegments: 12,
-            // bevelEnabled: true,
-            // bevelThickness: 10,
-            // bevelSize: 8,
-            // bevelOffset: 0,
-            // bevelSegments: 5
         } );
         let textMesh = new THREE.Mesh(textGeom, this.material);
 
         textMesh.position.copy(this.position);
         textMesh.rotation.setFromVector3(this.rotation);
-
-        console.log(textMesh)
         return textMesh;
     }
 
     start(from=3) {
-        this._displayNumber(3)
+        let mesh = this._createMesh(from.toString())
+        this.scene.add(mesh)
+        this._displayNumber(from-1, mesh)
     }
 
     _displayNumber(number, previous=null) {

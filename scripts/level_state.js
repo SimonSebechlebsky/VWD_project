@@ -2,12 +2,18 @@ import MedicPerson from "./person/medic_person.js";
 import RandomPerson from "./person/random_person.js";
 import {WORLD_SIZE} from "./world.js";
 
+import Virus from './virus.js'
+
 
 class LevelState {
 
-    constructor(healthyPeopleCount, illPeopleCount) {
+    constructor(healthyPeopleCount, illPeopleCount, virusInterval=[5,8]) {
         this.medic = new MedicPerson();
         this.randomPeople = new Map();
+        this.virusInterval = virusInterval;
+        this.nextVirusTime = this.getNextVirusTime()
+        this.viruses = [];
+
 
         for (let i = 0; i < healthyPeopleCount; i++) {
             let person = new RandomPerson([
@@ -33,9 +39,13 @@ class LevelState {
         return Math.floor(Math.random()*(WORLD_SIZE-20)-WORLD_SIZE/2)
     }
 
+    getNextVirusTime() {
+        return Date.now() + this.virusInterval[0]*1000 + Math.random()*(this.virusInterval[1]-this.virusInterval[0])*1000;
+    }
+
 
     updatables() {
-        return [this.medic, ...Array.from(this.randomPeople.values())];
+        return [this.medic, ...Array.from(this.randomPeople.values()), ...this.viruses];
     }
 
     pause() {
@@ -87,6 +97,24 @@ class LevelState {
             }
         }
         return vaccinablePeople;
+    }
+
+    createVirusIfTime() {
+        if (Date.now() > this.nextVirusTime) {
+            console.log(this.viruses);
+            this.nextVirusTime = this.getNextVirusTime();
+            this.viruses.push(new Virus());
+        }
+    }
+
+    removeOffViruses() {
+        if (this.viruses.length === 0) {
+            return;
+        }
+
+        if (this.viruses[0].model.position.x < -WORLD_SIZE) { // viruses have the same speed, they are sorted in the array
+            this.viruses.shift();
+        }
     }
 }
 
