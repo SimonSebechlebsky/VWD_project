@@ -15,7 +15,7 @@ class CollisionDetection {
         for (let person of vaccinablePeople.values()) {
             const box = nearby.createBox(person.stickman.position.x,
                 person.stickman.position.y, person.stickman.position.z,
-                44, 75, 44
+                44, 100, 44
             );
             person.nearbyObj = nearby.createObject(person.uuid, box);
             nearby.insert(person.nearbyObj);
@@ -29,7 +29,7 @@ class CollisionDetection {
             this.nearby.update(
                 person.nearbyObj, person.stickman.position.x, person.stickman.position.y,
                 person.stickman.position.z,
-                44, 75, 44
+                44, 100, 44
             );
         }
     }
@@ -38,8 +38,6 @@ class CollisionDetection {
         let result;
         if (this.nearby) {
             result = this.nearby.query(x, y, z);
-            for (let object of result.keys()) {
-            }
         }
         return Array.from(result.keys());
     }

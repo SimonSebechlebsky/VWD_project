@@ -103,7 +103,7 @@ class LevelState {
 
     createVirusIfTime() {
         if (Date.now() > this.nextVirusTime) {
-            console.log(this.viruses);
+            // console.log(this.viruses);
             this.nextVirusTime = this.getNextVirusTime();
             this.viruses.push(new Virus());
         }

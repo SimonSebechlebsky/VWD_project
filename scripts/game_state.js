@@ -10,7 +10,7 @@ class GameState {
 
     constructor() {
         this.paused = true;
-        this.levelState = new LevelState(30, 4);
+        this.levelState = new LevelState(30, 0);
         this.collisionDetection = new CollisionDetection(this.levelState);
         this.diseaseSpreading = new DiseaseSpreading(this.levelState, this.collisionDetection);
         this.countDown = new CountDown(scene, () => {
@@ -32,7 +32,7 @@ class GameState {
 
         this.deltaAcc += delta;
         if (this.deltaAcc > this.collisionDetectionInterval) {
-            console.log('colision update');
+            // console.log('colision update');
             this.collisionDetection.update();
             this.diseaseSpreading.update();
             this.deltaAcc = 0;
