@@ -2,6 +2,8 @@ import { GLTFLoader } from "https://cdn.skypack.dev/three@0.122.0/examples/jsm/l
 import * as THREE from "https://cdn.skypack.dev/three@v0.122.0/build/three.module.js";
 import _ from 'https://cdn.skypack.dev/lodash';
 
+import loadingManager from "../../scripts/loading_manager.js";
+
 
 class Stickman {
     constructor(scene, position, color, loadingCallback=null) {
@@ -13,7 +15,7 @@ class Stickman {
         this.animations = {};
         this.loadingCallback = loadingCallback;
         this.loaded = false;
-        let gltfLoader = new GLTFLoader();
+        let gltfLoader = new GLTFLoader(loadingManager);
         gltfLoader.load("./models/stickman/scene.gltf", (gltf) => this._loadGLTF(gltf));
 
     }

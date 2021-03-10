@@ -1,9 +1,14 @@
 import * as THREE from "https://cdn.skypack.dev/three@v0.122.0/build/three.module.js";
 import { FBXLoader } from "https://cdn.skypack.dev/three@0.122.0/examples/jsm/loaders/FBXLoader.js";
 
+import loadingManager from "../../scripts/loading_manager.js";
+
 let virusMesh = null;
-const gltfLoader = new FBXLoader();
-gltfLoader.load("./models/virus/virus.fbx", (obj) => {virusMesh = obj.children[0].children[0]});
+const gltfLoader = new FBXLoader(loadingManager);
+gltfLoader.load("./models/virus/virus.fbx", (obj) => {
+    console.log('asdahjahfjsf')
+    virusMesh = obj.children[0].children[0]
+});
 
 
 class VirusModel {

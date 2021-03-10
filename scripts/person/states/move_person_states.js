@@ -135,7 +135,7 @@ class RunningState extends WalkingState {
 
     constructor(person) {
         super(person);
-        this.speed = 400;
+        this.speed = 350;
         this.enter();
     }
 

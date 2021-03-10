@@ -18,7 +18,7 @@ class GameState {
             this.levelState.unpause();
         })
 
-        this.collisionDetectionInterval = 0.5;
+        this.collisionDetectionInterval = 0.3;
         this.deltaAcc = 0;
     }
 
@@ -32,8 +32,10 @@ class GameState {
 
         this.deltaAcc += delta;
         if (this.deltaAcc > this.collisionDetectionInterval) {
+            console.log('colision update');
             this.collisionDetection.update();
             this.diseaseSpreading.update();
+            this.deltaAcc = 0;
         }
     }
 }
