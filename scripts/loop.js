@@ -6,13 +6,12 @@ const clock = new THREE.Clock();
 
 
 class Loop {
-    constructor(camera, scene, renderer, light, gameState, collisionDetection) {
+    constructor(camera, scene, renderer, light, gameState) {
         this.camera = camera;
         this.scene = scene;
         this.renderer = renderer;
         this.light = light;
         this.gameState = gameState;
-        this.collisionDetection = collisionDetection;
     }
 
     start() {

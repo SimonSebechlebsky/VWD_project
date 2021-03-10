@@ -1,7 +1,7 @@
 import LevelState from "./level_state.js";
 import CountDown from './count_down.js'
 
-import {collisionDetection, scene} from './world.js'
+import {scene} from './world.js'
 import {CollisionDetection} from "./collision_detection.js";
 import {DiseaseSpreading} from "./disease_spreading.js";
 

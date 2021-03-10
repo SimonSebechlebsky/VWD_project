@@ -8,7 +8,6 @@ let camera;
 let renderer;
 let light;
 let gameState;
-let collisionDetection;
 
 const CAMERA_INITIAL_POSITION = new THREE.Vector3(-330,660,-330);
 const WORLD_SIZE = 1300;
@@ -21,7 +20,7 @@ class World {
         renderer = createRenderer();
         light = createLight();
         gameState = new GameState();
-        loop = new Loop(camera, scene, renderer, light, gameState, collisionDetection);
+        loop = new Loop(camera, scene, renderer, light, gameState);
         document.body.appendChild( renderer.domElement );
     }
 
@@ -91,5 +90,5 @@ function createRenderer() {
 }
 
 
-export { World, scene, CAMERA_INITIAL_POSITION, WORLD_SIZE, gameState, collisionDetection };
+export { World, scene, CAMERA_INITIAL_POSITION, WORLD_SIZE, gameState };
 export default World;

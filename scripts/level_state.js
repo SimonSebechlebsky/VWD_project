@@ -1,22 +1,25 @@
 import MedicPerson from "./person/medic_person.js";
 import RandomPerson from "./person/random_person.js";
 import {WORLD_SIZE} from "./world.js";
+import {Score} from "./score.js";
 
 import Virus from './virus.js'
 
 
 class LevelState {
 
-    constructor(healthyPeopleCount, illPeopleCount, virusInterval=[2,3]) {
+    constructor(initHealthyPeopleCount, initIllPeopleCount, virusInterval=[2,3]) {
         this.medic = new MedicPerson();
         this.randomPeople = new Map();
         this.virusInterval = virusInterval;
         this.nextVirusTime = null;
         this.viruses = [];
         this.paused = true;
+        this.initIllPeopleCount = initIllPeopleCount;
+        this.initHealthyPeopleCount = initHealthyPeopleCount;
+        this.score = new Score(this.initIllPeopleCount, this.initHealthyPeopleCount);
 
-
-        for (let i = 0; i < healthyPeopleCount; i++) {
+        for (let i = 0; i < this.initHealthyPeopleCount; i++) {
             let person = new RandomPerson([
                 this.randomCoordinate(),
                 0,
@@ -25,7 +28,7 @@ class LevelState {
             this.randomPeople.set(person.uuid, person);
         }
 
-        for (let i = 0; i < illPeopleCount; i++) {
+        for (let i = 0; i < this.initIllPeopleCount; i++) {
             let person = new RandomPerson([
                 this.randomCoordinate(),
                 0,
@@ -77,25 +80,6 @@ class LevelState {
         this.paused = false;
         this.nextVirusTime = this.getNextVirusTime();
     }
-
-    getIllPeopleCount() {
-        return this.getIllPeople().size;
-    }
-
-    getVaccinatedPeopleCount() {
-        let count = 0;
-        for (let person of this.randomPeople.values()) {
-            if (person.vaccinated) {
-                count++;
-            }
-        }
-        return count;
-    }
-
-    getVaccinablePeopleCount() {
-        return this.getVaccinablePeople().size;
-    }
-
 
     getIllPeople() {
         let illPeople = new Map();

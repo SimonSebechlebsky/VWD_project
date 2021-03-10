@@ -15,6 +15,8 @@ class DiseaseSpreading {
                 let nearbyPerson = this.levelState.randomPeople.get(nearbyPeople[0].id);
                 nearbyPerson.beInfected(()=> {
                     this.collisionDetection.remove(nearbyPerson.nearbyObj);
+                    this.levelState.score.updateIllPeopleCount();
+                    this.levelState.score.updateVaccinablePeopleCount();
                 });
             }
         }
@@ -22,8 +24,6 @@ class DiseaseSpreading {
 
     update() {
         let illPeople = this.levelState.getIllPeople();
-        // let people = this.collisionDetection.getPeople();
-
         this.infect(illPeople);
     }
 

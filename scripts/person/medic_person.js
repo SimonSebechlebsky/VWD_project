@@ -23,6 +23,8 @@ class MedicPerson extends Person {
             let nearbyPerson = people.get(nearbyPeople[0].id);
             nearbyPerson.vaccinated = true;
             gameState.collisionDetection.remove(nearbyPerson.nearbyObj);
+            gameState.levelState.score.updateVaccinatedPeopleCount();
+            gameState.levelState.score.updateVaccinablePeopleCount();
         }
     }
 
