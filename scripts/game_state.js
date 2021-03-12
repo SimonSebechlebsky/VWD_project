@@ -10,7 +10,7 @@ class GameState {
 
     constructor() {
         this.paused = true;
-        this.levelState = new LevelState(30, 0);
+        this.levelState = new LevelState(20, 0);
         this.collisionDetection = new CollisionDetection(this.levelState);
         this.diseaseSpreading = new DiseaseSpreading(this.levelState, this.collisionDetection);
         this.countDown = new CountDown(scene, () => {
