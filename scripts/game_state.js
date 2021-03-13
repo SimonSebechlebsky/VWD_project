@@ -22,9 +22,9 @@ class GameState {
         this.deltaAcc = 0;
     }
 
-    play() {
+    start() {
         this.countDown.start();
-        document.getElementById("background").style.display = 'none';
+        document.getElementById("intro").style.display = 'none';
     }
 
     update(delta) {
@@ -37,6 +37,16 @@ class GameState {
             this.diseaseSpreading.update();
             this.deltaAcc = 0;
         }
+    }
+
+    endLevel(succesful) {
+        // ...
+        // game logic to stop everything
+
+        let illPeopleCount = this.levelState.score.illPeopleCount;
+        document.getElementById('levelMessage').innerHTML = succesful ? 'Good Job!' : 'Wanna try again?';
+        document.getElementById('levelMessage').innerHTML = illPeopleCount;
+        document.getElementById('levelEnd').style.display = 'block';
     }
 }
 

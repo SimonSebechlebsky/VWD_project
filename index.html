@@ -3,7 +3,7 @@
 <head>
   
   <meta charset="UTF-8" />
-  <title>THREE.js Model Loaders!</title>
+  <title>Vaccinate everyone!</title>
 
   <link rel="stylesheet" href="styles/index.css">
   <script type="text/javascript" src="https://github.com/oguzeroglu/Nearby/releases/download/v1.2.0/Nearby.min.js"></script>
@@ -12,7 +12,8 @@
   <script type="module" src="./scripts/main.js"></script>
   <script type="module">
     import {gameState} from './scripts/world.js'
-    document.querySelector('#playButton').addEventListener('click', () => gameState.play())
+    document.querySelector('#playButton').addEventListener('click', () => gameState.start());
+    document.querySelector('#levelButton').addEventListener('click', () => gameState.playLevel());
   </script>
 
   <div id="score">
@@ -20,15 +21,23 @@
     <p id="pre_score_vaccinated"></p>
     <p id="pre_score_vaccinable"></p>
   </div>
-
-  <div id="background">
+  <div id="intro" class="background">
     <div class="inner">
-      <div id="instructions">
+      <div id="instructions" class="gameInfo">
         <p>WSAD or arrows - move</p>
         <p>shift - run</p>
         <p>spacebar - vaccinate</p>
       </div>
       <button id="playButton" disabled>Loading...</button>
+    </div>
+  </div>
+  <div id="levelEnd" class="background" hidden>
+    <div class="inner">
+      <div id="levelInfo" class="gameInfo">
+        <p id="levelMessage">Good job!</p>
+        <p><b id="illCount">_</b> people have fallen ill.</p>
+      </div>
+      <button id="levelButton" disabled>Next Level</button>
     </div>
   </div>
 </body>
