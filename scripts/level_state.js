@@ -174,7 +174,7 @@ class LevelState {
 
     checkScore() {
         if (!this.paused) {
-            if (this.score.illPeopleCount >= 3) {
+            if (this.score.illPeopleCount >= 5) {
                 this.retryLevel();
             } else if (this.score.vaccinablePeopleCount === 0) {
                 this.nextLevel();

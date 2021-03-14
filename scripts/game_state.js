@@ -8,12 +8,14 @@ class GameState {
 
     constructor() {
         this.levelState = null;
+        this.levelNum = 1;
         this.countDown = new CountDown(scene, () => {
             this.levelState.unpause();
-        })
+        });
         this.initPeopleCount = 15;
         this.initVirusInterval = [2, 3];
         this.initVirusCount = 3;
+
     }
 
     createLevelState() {
@@ -22,7 +24,7 @@ class GameState {
     }
 
     start() {
-        this.countDown.start();
+        this.countDown.start(1);
         document.getElementById("intro").style.display = 'none';
     }
 
@@ -38,7 +40,7 @@ class GameState {
 
     playLevelAgain() {
         this.levelState = new LevelState(this.initPeopleCount, 0, this.initVirusInterval, this.initVirusCount);
-        this.countDown.start();
+        this.countDown.start(this.levelNum);
         document.getElementById('retryLevelButton').style.display = 'none';
         document.getElementById('nextLevelButton').style.display = 'none';
         document.getElementById('levelEnd').style.display = 'none';
@@ -47,8 +49,11 @@ class GameState {
     playNextLevel() {
         this.initPeopleCount += 5;
         this.initVirusCount += 1;
+        this.initVirusInterval[0] -= 0.2;
+        this.initVirusInterval[1] += 0.2;
+        this.levelNum++;
         this.levelState = new LevelState(this.initPeopleCount, 0, this.initVirusInterval, this.initVirusCount);
-        this.countDown.start();
+        this.countDown.start(this.levelNum);
         document.getElementById('nextLevelButton').style.display = 'none';
         document.getElementById('retryLevelButton').style.display = 'none';
         document.getElementById('levelEnd').style.display = 'none';
