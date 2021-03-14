@@ -11,10 +11,13 @@ class GameState {
         this.countDown = new CountDown(scene, () => {
             this.levelState.unpause();
         })
+        this.initPeopleCount = 15;
+        this.initVirusInterval = [2, 3];
+        this.initVirusCount = 3;
     }
 
     createLevelState() {
-        this.levelState = new LevelState(20, 0);
+        this.levelState = new LevelState(this.initPeopleCount, 0, this.initVirusInterval, this.initVirusCount);
         console.log(this.levelState);
     }
 
@@ -32,6 +35,25 @@ class GameState {
             }
         }
     }
+
+    playLevelAgain() {
+        this.levelState = new LevelState(this.initPeopleCount, 0, this.initVirusInterval, this.initVirusCount);
+        this.countDown.start();
+        document.getElementById('retryLevelButton').style.display = 'none';
+        document.getElementById('nextLevelButton').style.display = 'none';
+        document.getElementById('levelEnd').style.display = 'none';
+    }
+
+    playNextLevel() {
+        this.initPeopleCount += 5;
+        this.initVirusCount += 1;
+        this.levelState = new LevelState(this.initPeopleCount, 0, this.initVirusInterval, this.initVirusCount);
+        this.countDown.start();
+        document.getElementById('nextLevelButton').style.display = 'none';
+        document.getElementById('retryLevelButton').style.display = 'none';
+        document.getElementById('levelEnd').style.display = 'none';
+    }
+
 }
 
 export default GameState;

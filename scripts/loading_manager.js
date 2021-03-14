@@ -6,7 +6,7 @@ const loadingManager = new THREE.LoadingManager();
 loadingManager.onLoad = function ( ) {
     gameState.createLevelState();
     const button = document.getElementById("playButton");
-    button.removeAttribute("disabled")
+    button.removeAttribute("disabled");
     button.innerHTML = 'Play';
 };
 

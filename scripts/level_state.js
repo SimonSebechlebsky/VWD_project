@@ -6,11 +6,12 @@ import {Score} from "./score.js";
 import Virus from './virus.js'
 import {CollisionDetection} from "./collision_detection.js";
 import {DiseaseSpreading} from "./disease_spreading.js";
+import {scene} from './world.js';
 
 
 class LevelState {
 
-    constructor(initHealthyPeopleCount, initIllPeopleCount, virusInterval=[2,3], initVirusCount=3) {
+    constructor(initHealthyPeopleCount, initIllPeopleCount, virusInterval, initVirusCount) {
         this.medic = new MedicPerson();
         this.randomPeople = new Map();
         this.virusInterval = virusInterval;
@@ -40,7 +41,6 @@ class LevelState {
             ], 'ill');
             this.randomPeople.set(person.uuid, person);
         }
-
 
         this.collisionDetection = new CollisionDetection(this);
         this.diseaseSpreading = new DiseaseSpreading(this.collisionDetection, this);
@@ -152,21 +152,23 @@ class LevelState {
 
     nextLevel() {
         this.pause();
-
+        this.removeObjects();
         let illPeopleCount = this.score.illPeopleCount;
         document.getElementById('levelMessage').innerHTML = 'Good Job!';
         document.getElementById('illCount').innerHTML = illPeopleCount;
         document.getElementById('nextLevelButton').style.display = 'block';
+        document.getElementById('nextLevelButton').removeAttribute("disabled");
         document.getElementById('levelEnd').style.display = 'block';
     }
 
     retryLevel() {
         this.pause();
-
+        this.removeObjects();
         let illPeopleCount = this.score.illPeopleCount;
         document.getElementById('levelMessage').innerHTML = 'Wanna try again?';
         document.getElementById('illCount').innerHTML = illPeopleCount;
         document.getElementById('retryLevelButton').style.display = 'block';
+        document.getElementById('retryLevelButton').removeAttribute("disabled");
         document.getElementById('levelEnd').style.display = 'block';
     }
 
@@ -178,6 +180,19 @@ class LevelState {
                 this.nextLevel();
             }
         }
+    }
+
+    removeObjects() {
+        scene.remove(this.medic.stickman.scene_obj);
+        for (let person of this.randomPeople.values()) {
+            scene.remove(person.stickman.scene_obj);
+        }
+
+        for (let virus of this.viruses) {
+            virus.destroy();
+        }
+
+        // this.removeOffViruses();
     }
 }
 

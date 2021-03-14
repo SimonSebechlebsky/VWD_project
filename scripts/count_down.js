@@ -5,7 +5,7 @@ class CountDown {
 
     constructor(scene, countDownCallback) {
         this.scene = scene;
-        this.countDownCallback = countDownCallback
+        this.countDownCallback = countDownCallback;
         const loader = new THREE.FontLoader();
         this.font = null;
         this.mesh = null;
