@@ -5,10 +5,10 @@ class CollisionDetection {
 
     constructor(levelState) {
         this.levelState = levelState;
-        this.nearby = this.create();
+        this.nearby = this.createNearbyObj();
     }
 
-    create() {
+    createNearbyObj() {
         const binSize = 7;
         const nearby = new Nearby(WORLD_SIZE, 100, WORLD_SIZE, binSize);
         let vaccinablePeople = this.levelState.getVaccinablePeople();
@@ -42,8 +42,8 @@ class CollisionDetection {
         return Array.from(result.keys());
     }
 
-    remove(nearbyObj) {
-        this.nearby.delete(nearbyObj);
+    remove(person) {
+        this.nearby.delete(person.nearbyObj);
     }
 
 }

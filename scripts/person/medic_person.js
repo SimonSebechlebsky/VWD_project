@@ -2,7 +2,7 @@ import Person from './person.js'
 
 import KeyboardInputHandler from "../keyboard_input_handler.js";
 import Stickman from "../../models/stickman/index.js";
-import {scene, gameState} from "../world.js";
+import {scene} from "../world.js";
 
 class MedicPerson extends Person {
 
@@ -15,25 +15,12 @@ class MedicPerson extends Person {
         return new Stickman(scene, position, [51, 190, 255], (stickman) => stickman.idle());
     }
 
-    vaccinate() {
-        let nearbyPeople = gameState.collisionDetection.findNearby(this.stickman.position.x, this.stickman.position.y,
-            this.stickman.position.z);
-        let people = gameState.levelState.randomPeople;
-        if (nearbyPeople[0]) {
-            let nearbyPerson = people.get(nearbyPeople[0].id);
-            nearbyPerson.vaccinated = true;
-            gameState.collisionDetection.remove(nearbyPerson.nearbyObj);
-            gameState.levelState.score.updateVaccinatedPeopleCount();
-            gameState.levelState.score.updateVaccinablePeopleCount();
-        }
+    vaccinate(nearbyPerson) {
+        nearbyPerson.vaccinated = true;
     }
 
     tick(delta) {
-        let input = super.tick(delta);
-
-        if (input.includes("space")) {
-            this.vaccinate();
-        }
+        return super.tick(delta);
     }
 }
 

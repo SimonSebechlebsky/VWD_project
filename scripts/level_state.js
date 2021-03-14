@@ -4,6 +4,8 @@ import {WORLD_SIZE} from "./world.js";
 import {Score} from "./score.js";
 
 import Virus from './virus.js'
+import {CollisionDetection} from "./collision_detection.js";
+import {DiseaseSpreading} from "./disease_spreading.js";
 
 
 class LevelState {
@@ -18,6 +20,8 @@ class LevelState {
         this.initIllPeopleCount = initIllPeopleCount;
         this.initHealthyPeopleCount = initHealthyPeopleCount;
         this.score = new Score(this.initIllPeopleCount, this.initHealthyPeopleCount);
+        this.collisionDetectionInterval = 0.3;
+        this.deltaAcc = 0;
 
         for (let i = 0; i < this.initHealthyPeopleCount; i++) {
             let person = new RandomPerson([
@@ -37,6 +41,8 @@ class LevelState {
             this.randomPeople.set(person.uuid, person);
         }
 
+        this.collisionDetection = new CollisionDetection(this);
+        this.diseaseSpreading = new DiseaseSpreading(this.collisionDetection, this);
     }
 
     randomCoordinate() {
@@ -47,22 +53,38 @@ class LevelState {
         return Date.now() + this.virusInterval[0]*1000 + Math.random()*(this.virusInterval[1]-this.virusInterval[0])*1000;
     }
 
-
-    updatables() {
-        return [this.medic, ...Array.from(this.randomPeople.values()), ...this.viruses];
-    }
-
     update(delta) {
 
-        this.medic.tick(delta);
+        let input = this.medic.tick(delta);
+
+        if (input.includes("space")) {
+            let nearbyPeople = this.collisionDetection.findNearby(this.medic.stickman.position.x, this.medic.stickman.position.y,
+                this.medic.stickman.position.z);
+            if (nearbyPeople[0]) {
+                let nearbyPerson = this.randomPeople.get(nearbyPeople[0].id);
+                this.medic.vaccinate(nearbyPerson);
+
+                this.collisionDetection.remove(nearbyPerson);
+                this.score.updateVaccinatedPeopleCount();
+                this.score.updateVaccinablePeopleCount();
+                this.checkScore();
+            }
+        }
+
         Array.from(this.randomPeople.values()).forEach((person) => person.tick(delta));
+
+        this.deltaAcc += delta;
+        if (this.deltaAcc > this.collisionDetectionInterval) {
+            this.collisionDetection.update();
+            this.diseaseSpreading.update();
+            this.deltaAcc = 0;
+        }
 
         if (!this.paused) {
             this.viruses.forEach((virus) => virus.tick(delta));
             this.createVirusIfTime();
             this.removeOffViruses();
         }
-
     }
 
     pause() {
@@ -117,6 +139,33 @@ class LevelState {
         if (this.viruses[0].model.position.x < -WORLD_SIZE) { // viruses have the same speed, they are sorted in the array
             this.viruses[0].destroy();
             this.viruses.shift();
+        }
+    }
+
+    nextLevel() {
+        this.pause();
+
+        let illPeopleCount = this.score.illPeopleCount;
+        document.getElementById('levelMessage').innerHTML = 'Good Job!';
+        document.getElementById('illCount').innerHTML = illPeopleCount;
+        document.getElementById('levelEnd').style.display = 'block';
+    }
+
+    retryLevel() {
+        this.pause();
+
+        let illPeopleCount = this.score.illPeopleCount;
+        document.getElementById('levelMessage').innerHTML = 'Wanna try again?';
+        document.getElementById('illCount').innerHTML = illPeopleCount;
+        document.getElementById('levelEnd').style.display = 'block';
+    }
+
+    checkScore() {
+        if (this.score.illPeopleCount >= 15) {
+            this.retryLevel();
+        }
+        else if (this.score.vaccinablePeopleCount === 0) {
+            this.nextLevel();
         }
     }
 }

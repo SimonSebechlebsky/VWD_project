@@ -1,9 +1,9 @@
 
 class DiseaseSpreading {
 
-    constructor(levelState, collisionDetection) {
-        this.levelState = levelState;
+    constructor(collisionDetection, levelState) {
         this.collisionDetection = collisionDetection;
+        this.levelState = levelState;
     }
 
     infectAtPosition(x, y, z) {
@@ -13,9 +13,10 @@ class DiseaseSpreading {
         if (nearbyPeople[0]) {
             let nearbyPerson = this.levelState.randomPeople.get(nearbyPeople[0].id);
             nearbyPerson.beInfected(()=> {
-                this.collisionDetection.remove(nearbyPerson.nearbyObj);
+                this.collisionDetection.remove(nearbyPerson);
                 this.levelState.score.updateIllPeopleCount();
                 this.levelState.score.updateVaccinablePeopleCount();
+                this.levelState.checkScore();
             });
         }
     }
@@ -32,8 +33,6 @@ class DiseaseSpreading {
                 virus.model.position.z);
         }
     }
-
-
 
 }
 

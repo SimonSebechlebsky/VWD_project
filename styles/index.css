@@ -17,11 +17,6 @@ html, body {
   padding: 0;
 }
 
-/*button{*/
-/*  margin:auto;*/
-/*  position:absolute;*/
-/*}*/
-
 .background {
   position: absolute;
   background: rgba(255,255,255,0.3);
@@ -42,12 +37,7 @@ html, body {
 
 }
 
-body {
-  /*background: skyblue;*/
-}
-
 #pre_score_ill, #pre_score_vaccinable, #pre_score_vaccinated {
-  /*background: skyblue;*/
   margin-left: 15px;
   font-family: Monaco;
   font-size: 15px;

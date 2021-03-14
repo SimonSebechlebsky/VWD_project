@@ -16,7 +16,7 @@ class KeyboardInputHandler {
     }
 
     getInput() {
-        if (gameState.paused) {
+        if (gameState.levelState.paused) {
             return [];
         }
 
