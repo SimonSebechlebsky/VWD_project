@@ -6,9 +6,9 @@ import VirusModel from "../models/virus/virus_model.js";
 import {scene} from './world.js'
 
 class Virus {
-    constructor() {
-        this.model = new VirusModel(scene, [WORLD_SIZE,50,Math.random()*WORLD_SIZE-WORLD_SIZE/2]);
-        this.speed = 150;
+    constructor(xPosition=WORLD_SIZE) {
+        this.model = new VirusModel(scene, [xPosition,50,Math.random()*WORLD_SIZE-WORLD_SIZE/2]);
+        this.speed = Math.random()*100 + 75;
         this.paused = true;
     }
 

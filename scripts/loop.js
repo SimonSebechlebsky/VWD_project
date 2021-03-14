@@ -28,12 +28,14 @@ class Loop {
 
     tick() {
         const delta = clock.getDelta();
-        this.gameState.update(delta);
+        this.gameState.update(delta, (levelState) => {
+            let medic = levelState.medic;
+            this.camera.position.copy(CAMERA_INITIAL_POSITION)
+            this.camera.position.add(medic.stickman.position);
+            this.light.position.set(medic.stickman.position.x, 700, medic.stickman.position.z);
+        });
 
-        let medic = this.gameState.levelState.medic;
-        this.camera.position.copy(CAMERA_INITIAL_POSITION)
-        this.camera.position.add(medic.stickman.position);
-        this.light.position.set(medic.stickman.position.x, 700, medic.stickman.position.z);
+
 
     }
 }

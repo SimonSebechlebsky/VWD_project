@@ -5,6 +5,12 @@ import _ from 'https://cdn.skypack.dev/lodash';
 import loadingManager from "../../scripts/loading_manager.js";
 
 
+const loader = new GLTFLoader(loadingManager);
+loader.load("./models/stickman/scene.gltf", (_) => {
+    // just to load the file to the browser, but can't be used because of three.js gltf cloning issue
+});
+
+
 class Stickman {
     constructor(scene, position, color, loadingCallback=null) {
         this.scene_obj = null;
@@ -15,7 +21,7 @@ class Stickman {
         this.animations = {};
         this.loadingCallback = loadingCallback;
         this.loaded = false;
-        let gltfLoader = new GLTFLoader(loadingManager);
+        let gltfLoader = new GLTFLoader();
         gltfLoader.load("./models/stickman/scene.gltf", (gltf) => this._loadGLTF(gltf));
 
     }

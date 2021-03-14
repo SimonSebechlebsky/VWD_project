@@ -7,10 +7,15 @@ import {scene} from './world.js';
 class GameState {
 
     constructor() {
-        this.levelState = new LevelState(15, 0);
+        this.levelState = null;
         this.countDown = new CountDown(scene, () => {
             this.levelState.unpause();
         })
+    }
+
+    createLevelState() {
+        this.levelState = new LevelState(15, 0);
+        console.log(this.levelState);
     }
 
     start() {
@@ -18,8 +23,14 @@ class GameState {
         document.getElementById("intro").style.display = 'none';
     }
 
-    update(delta) {
-        this.levelState.update(delta);
+    update(delta, updateCallback) {
+        if (this.levelState) {
+            this.levelState.update(delta);
+
+            if (updateCallback) {
+                updateCallback(this.levelState);
+            }
+        }
     }
 }
 

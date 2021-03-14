@@ -4,9 +4,8 @@ import { FBXLoader } from "https://cdn.skypack.dev/three@0.122.0/examples/jsm/lo
 import loadingManager from "../../scripts/loading_manager.js";
 
 let virusMesh = null;
-const gltfLoader = new FBXLoader(loadingManager);
-gltfLoader.load("./models/virus/virus.fbx", (obj) => {
-    console.log('asdahjahfjsf')
+const loader = new FBXLoader(loadingManager);
+loader.load("./models/virus/virus.fbx", (obj) => {
     virusMesh = obj.children[0].children[0]
 });
 

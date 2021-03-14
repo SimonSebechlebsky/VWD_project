@@ -10,7 +10,7 @@ import {DiseaseSpreading} from "./disease_spreading.js";
 
 class LevelState {
 
-    constructor(initHealthyPeopleCount, initIllPeopleCount, virusInterval=[2,3]) {
+    constructor(initHealthyPeopleCount, initIllPeopleCount, virusInterval=[2,3], initVirusCount=3) {
         this.medic = new MedicPerson();
         this.randomPeople = new Map();
         this.virusInterval = virusInterval;
@@ -41,8 +41,16 @@ class LevelState {
             this.randomPeople.set(person.uuid, person);
         }
 
+
         this.collisionDetection = new CollisionDetection(this);
         this.diseaseSpreading = new DiseaseSpreading(this.collisionDetection, this);
+
+        this.initVirusCount = initVirusCount;
+        for (let i = 0; i < this.initVirusCount; i++) {
+            let virus = new Virus(Math.random()*WORLD_SIZE/2+WORLD_SIZE/2);
+            this.viruses.push(virus);
+        }
+
     }
 
     randomCoordinate() {
