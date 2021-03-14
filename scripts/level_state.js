@@ -156,6 +156,7 @@ class LevelState {
         let illPeopleCount = this.score.illPeopleCount;
         document.getElementById('levelMessage').innerHTML = 'Good Job!';
         document.getElementById('illCount').innerHTML = illPeopleCount;
+        document.getElementById('nextLevelButton').style.display = 'block';
         document.getElementById('levelEnd').style.display = 'block';
     }
 
@@ -165,15 +166,17 @@ class LevelState {
         let illPeopleCount = this.score.illPeopleCount;
         document.getElementById('levelMessage').innerHTML = 'Wanna try again?';
         document.getElementById('illCount').innerHTML = illPeopleCount;
+        document.getElementById('retryLevelButton').style.display = 'block';
         document.getElementById('levelEnd').style.display = 'block';
     }
 
     checkScore() {
-        if (this.score.illPeopleCount >= 15) {
-            this.retryLevel();
-        }
-        else if (this.score.vaccinablePeopleCount === 0) {
-            this.nextLevel();
+        if (!this.paused) {
+            if (this.score.illPeopleCount >= 3) {
+                this.retryLevel();
+            } else if (this.score.vaccinablePeopleCount === 0) {
+                this.nextLevel();
+            }
         }
     }
 }

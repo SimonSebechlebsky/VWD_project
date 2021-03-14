@@ -14,7 +14,7 @@ class GameState {
     }
 
     createLevelState() {
-        this.levelState = new LevelState(15, 0);
+        this.levelState = new LevelState(20, 0);
         console.log(this.levelState);
     }
 

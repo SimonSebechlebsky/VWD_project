@@ -73,6 +73,11 @@ button{
   border:0;
   font-weight:100;
 }
+
 button:hover{
   background: #3B5C76;
+}
+
+#nextLevelButton, #retryLevelButton {
+  display: none;
 }

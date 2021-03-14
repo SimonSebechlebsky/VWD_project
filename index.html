@@ -13,7 +13,7 @@
   <script type="module">
     import {gameState} from './scripts/world.js'
     document.querySelector('#playButton').addEventListener('click', () => gameState.start());
-    document.querySelector('#levelButton').addEventListener('click', () => gameState.playLevel());
+    // document.querySelector('#nextLevelButton').addEventListener('click', () => gameState.playNextLevel());
   </script>
 
   <div id="score">
@@ -37,7 +37,8 @@
         <p id="levelMessage">Good job!</p>
         <p><b id="illCount">_</b> people have fallen ill.</p>
       </div>
-      <button id="levelButton" disabled>Next Level</button>
+      <button id="nextLevelButton" disabled>Next Level</button>
+      <button id="retryLevelButton" disabled>Retry Level</button>
     </div>
   </div>
 </body>
