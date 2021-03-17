@@ -50,6 +50,10 @@ class LevelState {
             let virus = new Virus(Math.random()*WORLD_SIZE/2+WORLD_SIZE/2);
             this.viruses.push(virus);
         }
+        this.winningSound = new Audio('../sounds/winning_sound.wav');
+        this.losingSound = new Audio('../sounds/losing_sound.wav');
+        this.vaccineSound = new Audio('../sounds/vaccine_sound.wav');
+        this.vaccineSound.volume = 0.4;
 
     }
 
@@ -71,7 +75,7 @@ class LevelState {
             if (nearbyPeople[0]) {
                 let nearbyPerson = this.randomPeople.get(nearbyPeople[0].id);
                 this.medic.vaccinate(nearbyPerson);
-
+                this.vaccineSound.play();
                 this.collisionDetection.remove(nearbyPerson);
                 this.score.updateVaccinatedPeopleCount();
                 this.score.updateVaccinablePeopleCount();
@@ -159,6 +163,7 @@ class LevelState {
         document.getElementById('nextLevelButton').style.display = 'block';
         document.getElementById('nextLevelButton').removeAttribute("disabled");
         document.getElementById('levelEnd').style.display = 'block';
+        this.winningSound.play();
     }
 
     retryLevel() {
@@ -170,6 +175,7 @@ class LevelState {
         document.getElementById('retryLevelButton').style.display = 'block';
         document.getElementById('retryLevelButton').removeAttribute("disabled");
         document.getElementById('levelEnd').style.display = 'block';
+        this.losingSound.play();
     }
 
     checkScore() {
@@ -191,8 +197,6 @@ class LevelState {
         for (let virus of this.viruses) {
             virus.destroy();
         }
-
-        // this.removeOffViruses();
     }
 }
 
